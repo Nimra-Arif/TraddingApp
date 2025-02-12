@@ -13,7 +13,7 @@ export default function MainNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
+      {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
       <Stack.Screen name="Onboarding" component={OnboardingPage1} />
       <Stack.Screen name="Tabs" component={TabNavigator} />
       </Stack.Navigator>
