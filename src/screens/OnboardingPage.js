@@ -74,15 +74,14 @@ const styles = {
   },
   title: {
     fontSize: 24,
-    fontFamily: "InterBold",
-    color: colors.primaryText,
+    fontFamily: "Antebas-Bold",
+    color: colors.text,
     textAlign: "center",
-    fontWeight:"bold",
   },
   description: {
     fontSize: 16,
-    fontFamily: "InterRegular",
-    color: colors.secondaryText,
+    fontFamily: "Antebas-Regular",
+    color: colors.subText,
     textAlign: "center",
     marginTop: 10,
     width: "90%",
@@ -112,7 +111,7 @@ const styles = {
     backgroundColor: colors.paginationActive,
   },
   button: {
-    backgroundColor: colors.buttonBackground,
+    backgroundColor: colors.mainColor,
     paddingVertical: 16,
     borderRadius: 10,
     width: "90%",
@@ -120,13 +119,13 @@ const styles = {
     marginBottom: 10,
   },
   buttonText: {
-    color: colors.buttonText,
+    color: colors.text,
     fontSize: 18,
-    fontFamily: "InterBold",
+    fontFamily: "Antebas-Bold",
   },
   footerText: {
-    color: colors.skipText,
+    color: colors.subText,
     fontSize: 14,
-    fontFamily: "InterRegular",
+    fontFamily: "Antebas-Regular",
   },
 };
