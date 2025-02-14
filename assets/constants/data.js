@@ -25,4 +25,21 @@ export default {
       footerText: 'Click "Allow paste" to link your referral code.',
     },
   ],
+  
+  signIn: {
+    title: "What’s your email address?", // Using `’` instead of `'`
+    description:
+      "We only need your email to sign you in. We keep your email private and won’t send spam.",
+    placeholder: "Enter your email address",
+    checkboxText:
+      "I agree to the Terms of Service and Privacy Policy.",
+    termsText: "Terms of Service",
+    privacyText: "Privacy Policy",
+  },
+  verifyEmail: {
+    title: "Verify your email",
+    description:
+      "Please enter the verification code we emailed you to continue check your spam folder too.",
+    placeholder: "Paste in code here...",
+  },
 };

@@ -33,7 +33,7 @@ const timeframes = {
   }))
 };
 
-const HomeScreen = () => {
+const StocksPage = ({navigation}) => {
   const [selectedTimeframe, setSelectedTimeframe] = useState("1D");
   const stockPrices = timeframes[selectedTimeframe];
 

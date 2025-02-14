@@ -1,20 +1,58 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, Image, TouchableOpacity, Dimensions,Alert,Share } from "react-native";
 import Swiper from "react-native-swiper";
 import colors from "../../assets/constants/colors";
 import data from "../../assets/constants/data";
 
 const { width, height } = Dimensions.get("window");
 export default function OnboardingScreen({ navigation }) {
-  const enableNotifications = () => {
-    console.log("Notifications Enabled!");
-  };
-  const inviteFriend = () => {
-    console.log("Invite a Friend Clicked!");
-  };
+
+  
+
+const enableNotifications = () => {
+  Alert.alert(
+    "Enable Notifications?",
+    "Moonshot would like to send you notifications. These may include alerts, sounds, and icon badges.",
+    [
+      {
+        text: "Don't Allow",
+        style: "cancel",
+        onPress: () => console.log("User denied notifications"),
+      },
+      {
+        text: "Allow",
+        onPress: () => {
+          console.log("Notifications Enabled!");
+        },
+      },
+    ]
+  );
+};
+
+
+const inviteFriend = async () => {
+  try {
+    const result = await Share.share({
+      message: "Join Moonshot and start earning! Use my invite link: https://moonshot.com/invite",
+    });
+
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        console.log(`Shared via ${result.activityType}`);
+      } else {
+        console.log("Shared successfully");
+      }
+    } else if (result.action === Share.dismissedAction) {
+      console.log("Share dismissed");
+    }
+  } catch (error) {
+    console.error("Error sharing:", error);
+  }
+};
+
 
   const navigateToSignIn = () => {
-    navigation.replace("SignIn");
+    navigation.navigate("SignInScreen");
   };
   const actions = {
     enableNotifications,
@@ -43,7 +81,7 @@ export default function OnboardingScreen({ navigation }) {
               <Text style={styles.buttonText}>{item.buttonText}</Text>
             </TouchableOpacity>
             {item.footerText !== "" && (
-              <TouchableOpacity onPress={() => navigation.replace("SignIn")}>
+              <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
                 <Text style={styles.footerText}>{item.footerText}</Text>
               </TouchableOpacity>
             )}
