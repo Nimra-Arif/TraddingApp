@@ -42,4 +42,9 @@ export default {
       "Please enter the verification code we emailed you to continue check your spam folder too.",
     placeholder: "Paste in code here...",
   },
+  disclaimer: [
+    "Moonshot is not an exchange and does not provide investment advice. The content of this app is not investment advice and does not constitute any offer or solicitation to offer or recommendation of any product or service.",
+    "Cryptocurrency memecoins are not assets and do not possess any intrinsic utility or value. They are for entertainment purposes only and should not be considered an investment, currency, or anything of value. The price of memecoins can be extremely volatile and unpredictable. Price data in the app may be inaccurate or delayed.",
+    "Conversion between fiat and cryptocurrencies is provided by MoonPay, Inc. Cash balances are held in USDC, a fully collateralized stablecoin. All swap transactions are made on the blockchain using the self-custodial wallet connected to your account. Moonshot takes a fee each time you buy or sell a coin to cover platform costs that vary based on network congestion and gas prices. Moonshot is a visual interface to blockchain decentralized exchanges and does not directly exchange, develop, create, maintain, or endorse any cryptocurrencies.",
+  ],
 };

@@ -1,229 +1,146 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions ,Image} from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
-import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, Dimensions, Image, StyleSheet, Animated } from 'react-native';
+import { Ionicons, AntDesign, FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import colors from '../../../assets/constants/colors';
+import StockDetails from '../../components/StockDetails';
+import StockInfo from '../../components/StockInfo';
 
 const { width } = Dimensions.get("window");
 
-// Complex fluctuating data with numerical values
-const timeframes = {
-  LIVE: Array.from({ length: 50 }, (_, i) => ({
-    value: parseFloat((Math.sin(i / 4) * 2 + 16 + Math.random() * 1.5).toFixed(2)),
-    date: `${10 + Math.floor(i / 6)}:${(i % 6) * 10} AM`
-  })),
-  
-  "4H": Array.from({ length: 60 }, (_, i) => ({
-    value: parseFloat((Math.sin(i / 5) * 3 + 16.5 + Math.random() * 2).toFixed(2)),
-    date: `${Math.floor(i / 4)}:${(i % 4) * 15} AM`
-  })),
+const StocksScreen = ({ navigation, route }) => {
+  const { item } = route.params;
+  const isUp = item.up;
+  const priceColor = isUp ? colors.buy : colors.sell;
 
-  "1D": Array.from({ length: 100 }, (_, i) => ({
-    value: parseFloat((Math.sin(i / 10) * 4 + 17 + Math.random() * 3).toFixed(2)),
-    date: `${Math.floor(i / 4)} AM`
-  })),
+  // State for animating text above the buy button
+  const [animatedValue] = useState(new Animated.Value(50)); // Start from bottom
 
-  "1W": Array.from({ length: 50 }, (_, i) => ({
-    value: parseFloat((Math.sin(i / 6) * 5 + 16.5 + Math.random() * 4).toFixed(2)),
-    date: `Day ${i + 1}`
-  })),
-
-  MAX: Array.from({ length: 80 }, (_, i) => ({
-    value: parseFloat((Math.exp(i / 30) * 3 + 5 + Math.random() * 2).toFixed(2)),
-    date: `${2010 + i}`
-  }))
-};
-
-const StocksPage = ({navigation}) => {
-  const [selectedTimeframe, setSelectedTimeframe] = useState("1D");
-  const stockPrices = timeframes[selectedTimeframe];
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 0, // Move to its position
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: '#0a0a1a' }} showsVerticalScrollIndicator={false}>
-      <View style={{ alignItems: 'left', paddingTop:0, }}>
-      <View style={{ paddingTop: 10 ,paddingLeft: 20,}}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={styles.container}>
 
-          
-          {/* Center Text */}
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
+        <View style={styles.headerIcons}>
+          <TouchableOpacity>
+            <AntDesign name="staro" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={{ marginLeft: 20 }}>
+            <Ionicons name="share-outline" size={26} color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <ScrollView style={styles.scrollcontainer} showsVerticalScrollIndicator={false}>
+
+        {/* Coin Info */}
+        <View style={styles.coinInfo}>
+          <Image source={item.image} style={styles.coinImage} />
           <View>
-            <Text style={{ color: 'gray', fontSize: 14 }}>TRUMP • Moonshot</Text>
-            <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>OFFICIAL TRUMP</Text>
+            <Text style={styles.coinTicker}>{item.name} • Moonshot</Text>
+            <Text style={styles.coinName}>{item.fullName || "Stool Prisondente"}</Text>
           </View>
         </View>
-                {/* Price Section */}
-                <Text style={{ fontSize: 36, color: 'white', fontWeight: 'bold' }}>${stockPrices[stockPrices.length - 1].value}</Text>
-        <Text style={{ fontSize: 16, color: 'red', marginBottom: 10 }}>
-          ▼ ${Math.abs(stockPrices[stockPrices.length - 1].value - stockPrices[0].value).toFixed(3)} 
-          ({((stockPrices[stockPrices.length - 1].value / stockPrices[0].value - 1) * 100).toFixed(3)}%) 
-          <Text style={{ color: 'gray' }}> Past {selectedTimeframe}</Text>
-        </Text>
-      </View>
 
+        {/* Stock Details Component */}
+        <StockDetails item={item} priceColor={priceColor} width={width} />
 
-        {/* Line Chart */}
-        <View style={{ width: '100%', height: 350, justifyContent: 'center', alignItems: 'center' }}>
-        <LineChart
-            curved
-            areaChart
-            data={stockPrices}
-            rotateLabel
-            labelsExtraHeight={20}
-            hideDataPoints
-            spacing={Math.min(20, width / stockPrices.length)} 
-            adjustSpacing
-            color="pink"
-            height={300} 
-            thickness={1}
-            startFillColor="pink"
-            endFillColor="pink"
-            startOpacity={0.3}
-            endOpacity={0.1}
-            initialSpacing={0}
-            hideYAxisText
-            rulesType="solid"
-            rulesColor="transparent"
-            xAxisColor="transparent"
-            pointerConfig={{
-              showPointerStrip: true,
-              pointerStripWidth: 2,
-              pointerStripColor: "lightgray",
-              pointerColor: "white",
-              radius: 5,
-              pointerLabelWidth: 100,
-              pointerLabelHeight: 50,
-              activatePointersOnLongPress: false,
-              autoAdjustPointerLabelPosition: true,
-              pointerLabelComponent: (items) => {
-                return (
-                  <View style={{
-                    height: 50,
-                    width: 100,
-                    justifyContent: "center",
-                    borderRadius: 8,
-                    backgroundColor: "white",
-                    padding: 10,
-                    alignItems: "center",
-                  }}>
-                    <Text style={{ color: "black", fontSize: 14, fontWeight: "bold" }}>{items[0].date}</Text>
-                    <Text style={{ fontWeight: "bold", textAlign: "center", color: "black" }}>
-                      ${items[0].value}
-                    </Text>
-                  </View>
-                );
-              },
-            }}
-          />
-        </View>
+        {/* Stock Info Component */}
+        <StockInfo />
 
-        {/* Timeframe Selector */}
-        <View style={{ flexDirection: "row", margin: 20 }}>
-          {Object.keys(timeframes).map((timeframe) => (
-            <TouchableOpacity
-              key={timeframe}
-              onPress={() => setSelectedTimeframe(timeframe)}
-              style={{
-                marginHorizontal: 5,
-                paddingVertical: 8,
-                paddingHorizontal: 15,
-                borderRadius: 20,
-                backgroundColor: selectedTimeframe === timeframe ? "pink" : "transparent",
-                borderColor: "pink",
-                borderWidth: 1,
-              }}
-            >
-              <Text style={{ color: selectedTimeframe === timeframe ? "black" : "pink", fontWeight: "bold" }}>
-                {timeframe}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
+      </ScrollView>
 
-      {/* Your Balance Section */}
-      <View style={{ paddingHorizontal: 20, paddingVertical: 40 }}>
-        <Text style={{ color: 'white', fontSize: 22, fontWeight: 'bold' }}>Your balance</Text>
-        
-        {/* Value & Quantity */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-          <Text style={{ color: 'gray', fontSize: 18 }}>Value</Text>
-          <Text style={{ color: 'gray', fontSize: 18 }}>Quantity</Text>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
-          <Text style={{ color: 'white', fontSize: 22 }}>$0.00</Text>
-          <Text style={{ color: 'white', fontSize: 22 }}>0</Text>
-        </View>
+      {/* Floating Buy Section */}
+      <View style={styles.buyButtonWrapper}>
+        <LinearGradient
+          colors={['transparent', colors.background]} // Smooth gradient fade effect
+          style={styles.gradientBackground}
+        />
 
-        {/* Divider Line */}
-        <View style={{ height: 1, backgroundColor: '#333', marginVertical: 15 }} />
-      </View>
+        {/* Animated Purchase Text */}
+        <Animated.View style={[styles.purchaseTextContainer, { transform: [{ translateY: animatedValue }] }]}>
+          <Ionicons name="person-circle-outline" size={18} color="white" />
+          <Text style={styles.purchaseText}>
+            bought <Text style={styles.purchaseAmount}>$3.0K</Text>
+          </Text>
+        </Animated.View>
 
-      {/* About Section */}
-      <View style={{ paddingHorizontal: 20 }}>
-        <Text style={{ color: 'white', fontSize: 22, fontWeight: 'bold' }}>About</Text>
-
-        {/* Market Cap */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 35 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Ionicons name="bar-chart-outline" size={24} color="white" />
-            <Text style={{ color: 'white', fontSize: 18, marginLeft: 10 }}>Market cap</Text>
-          </View>
-          <Text style={{ color: 'gray', fontSize: 18 }}>$16.7B</Text>
-        </View>
-
-        {/* Volume */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 35 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialCommunityIcons name="fire" size={24} color="white" />
-            <View>
-              <Text style={{ color: 'white', fontSize: 18, marginLeft: 10 }}>Volume</Text>
-              <Text style={{ color: 'gray', fontSize: 14, marginLeft: 10 }}>Past 24h</Text>
-            </View>
-          </View>
-          <Text style={{ color: 'gray', fontSize: 18 }}>$104M</Text>
-        </View>
-
-        {/* Holders */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 35 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Ionicons name="people-outline" size={24} color="white" />
-            <Text style={{ color: 'white', fontSize: 18, marginLeft: 10 }}>Holders</Text>
-          </View>
-          <Text style={{ color: 'gray', fontSize: 18 }}>648K</Text>
-        </View>
-
-        {/* Circulating Supply */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 35 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <FontAwesome5 name="chart-pie" size={24} color="white" />
-            <Text style={{ color: 'white', fontSize: 18, marginLeft: 10 }}>Circulating supply</Text>
-          </View>
-          <Text style={{ color: 'gray', fontSize: 18 }}>1.0B</Text>
-        </View>
-
-        {/* Created Date */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 35 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <MaterialCommunityIcons name="leaf" size={24} color="white" />
-            <Text style={{ color: 'white', fontSize: 18, marginLeft: 10 }}>Created</Text>
-          </View>
-          <Text style={{ color: 'gray', fontSize: 18 }}>22d 13h ago</Text>
-        </View>
-      </View>
-
-      {/* Buy Button */}
-      <View style={{ padding: 20, alignItems: 'center', marginTop: 20 }}>
-        <TouchableOpacity style={{
-          width: '100%',
-          backgroundColor: '#16C784',
-          paddingVertical: 15,
-          borderRadius: 10,
-          alignItems: 'center',
-        }}>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>Buy</Text>
+        {/* Buy Button */}
+        <TouchableOpacity style={styles.buyButton}>
+          <FontAwesome5 name="dollar-sign" size={16} color="white" style={styles.buyButtonIcon} />
+          <Text style={styles.buyButtonText}>Buy</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
-export default HomeScreen;
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "transparent" },
+  scrollcontainer: { flex: 1, backgroundColor: colors.background },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 60,
+    paddingHorizontal: 10,
+    backgroundColor: colors.background,
+  },
+  headerIcons: { flexDirection: "row" },
+  coinInfo: { flexDirection: "row", alignItems: "center", marginTop: 30, paddingHorizontal: 10 },
+  coinImage: { width: 50, height: 50, borderRadius: 50, marginRight: 10 },
+  coinTicker: { color: colors.subText, fontSize: 14, fontFamily: "Antebas-Bold" },
+  coinName: { color: colors.text, fontSize: 22, fontWeight: "bold", fontFamily: "Antebas-Bold" },
+
+  // Buy Button Wrapper
+  buyButtonWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    alignItems: 'center',
+    paddingBottom: 50,
+  },
+
+  // Gradient Background
+  gradientBackground: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 100, // Adjust the height for smoother effect
+  },
+
+  // Animated Purchase Text
+  purchaseTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: -30, // Floating above the button
+  },
+  purchaseText: { color: 'white', fontSize: 14, marginLeft: 5, fontWeight: 'bold' },
+  purchaseAmount: { color: colors.buy, fontWeight: 'bold' },
+
+  // Buy Button
+  buyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+    backgroundColor: '#16C784',
+    paddingVertical: 15,
+    borderRadius: 10,
+  },
+  buyButtonIcon: { marginRight: 8 },
+  buyButtonText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
+});
+
+export default StocksScreen;
