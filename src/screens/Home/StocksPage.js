@@ -77,7 +77,9 @@ const StocksScreen = ({ navigation, route }) => {
         </Animated.View>
 
         {/* Buy Button */}
-        <TouchableOpacity style={styles.buyButton}>
+        <TouchableOpacity style={styles.buyButton}
+        onPress={() => navigation.navigate("DepositScreen")}
+        >
           <FontAwesome5 name="dollar-sign" size={16} color="white" style={styles.buyButtonIcon} />
           <Text style={styles.buyButtonText}>Buy</Text>
         </TouchableOpacity>
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    backgroundColor: '#16C784',
+    backgroundColor: colors.mainColor,
     paddingVertical: 15,
     borderRadius: 10,
   },

@@ -13,11 +13,12 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
 
 const Watchlist = ({ watchlist, removeItem, navigation }) => {
-  // Store position refs in an object
   const positionRefs = useRef({});
 
   return (
-    <View style={styles.container}>
+    <>
+      {watchlist.length>0 &&
+      <View style={styles.container}>
       <Text style={styles.sectionTitle}>
         <FontAwesome5 name="eye" size={24} /> {"  "}Watchlist
       </Text>
@@ -54,7 +55,6 @@ const Watchlist = ({ watchlist, removeItem, navigation }) => {
             }
           },
         });
-
         return (
           <View key={item.id} style={styles.itemContainer}>
             {/* Background Delete Button */}
@@ -102,8 +102,9 @@ const Watchlist = ({ watchlist, removeItem, navigation }) => {
             </Animated.View>
           </View>
         );
-      })}
-    </View>
+      })}</View>
+    }
+    </>
   );
 };
 
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flex: 1, // Makes it cover full width without affecting animations
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     paddingVertical: 10,
   },
   watchlistImage: {

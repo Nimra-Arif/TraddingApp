@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   trendingItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     paddingVertical: 10,
   },
   trendingImage: {

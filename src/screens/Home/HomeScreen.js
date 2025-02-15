@@ -8,6 +8,8 @@ import { Animated } from 'react-native';
 import TopGainers from '../../components/TopGainers';
 import Trending from '../../components/Trending';
 import Watchlist from '../../components/Watchlist';
+import HeaderComponent from '../../components/HeaderComponent';
+
 const { width } = Dimensions.get("window");
 const HomeScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,24 +55,8 @@ const HomeScreen = ({ navigation }) => {
       backgroundColor: colors.background,
       paddingTop: Platform.OS === "android" ? 35 : 0
     }}>
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Ionicons name="time-outline" size={28} color={colors.text} />
-        </TouchableOpacity>
-        <View style={styles.searchContainer}>
-          <Ionicons name="search-outline" size={20} color={colors.subText} style={{ marginLeft: 10 }} />
-          <TextInput
-            placeholder="Search"
-            placeholderTextColor={colors.subText}
-            style={styles.searchInput}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
-        <TouchableOpacity>
-          <Ionicons name="settings-outline" size={28} color={colors.text} />
-        </TouchableOpacity>
-      </View>
+<HeaderComponent searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}
         onScroll={({ nativeEvent }) => {
           if (
@@ -99,30 +85,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 const styles = {
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-  },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: colors.accents,
-    borderRadius: 20,
-    borderWidth: 1,
-    padding: Platform.OS === "android" ? 0 : 10,
-    width: width * 0.7,
-    height: 50,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: colors.text,
-    marginLeft: 5,
-    backgroundColor: colors.background,
-    fontFamily: "Antebas-Regular",
-  },
+
   balanceContainer: {
     paddingHorizontal: 10,
     paddingVertical: 25,

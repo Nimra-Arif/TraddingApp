@@ -5,7 +5,7 @@ export default {
       description: "Moonshots are not assets or investments and do not have intrinsic value. Their prices may decrease at any time.",
       buttonText: "Enable notifications",
       buttonAction: "enableNotifications",  // 👈 Function name stored separately
-      image: require("../images/speaker.png"),
+      image: require("../images/notifcationicon.png"),
       footerText: "",
     },
     {
@@ -13,7 +13,7 @@ export default {
       description: "Make money when your friends sign up and trade with your link.",
       buttonText: "Invite a friend",
       buttonAction: "inviteFriend",  // 👈 Function name stored separately
-      image: require("../images/speaker.png"),
+      image: require("../images/inviteicon.png"),
       footerText: "Skip",
     },
     {
@@ -21,7 +21,7 @@ export default {
       description: "Your moonshots are held in a private wallet. We can't access or freeze your holdings, ever.",
       buttonText: "Register or Sign in",
       buttonAction: "navigateToSignIn",  // 👈 Function name stored separately
-      image: require("../images/speaker.png"),
+      image: require("../images/lockicon.png"),
       footerText: 'Click "Allow paste" to link your referral code.',
     },
   ],

@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/Home/HomeScreen';
-import RewardsScreen from '../screens/RewardsScreen';
+import RewardsScreen from '../screens/Rewards/RewardsScreen';
 import HoldingsScreen from '../screens/HoldingsScreen';
 import { View, Text } from 'react-native';
 import colors from "../../assets/constants/colors";
