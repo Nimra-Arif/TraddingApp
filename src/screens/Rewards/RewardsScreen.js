@@ -31,7 +31,9 @@ const RewardsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Component */}
-      <HeaderComponent />
+      <HeaderComponent 
+      navigation={navigation}
+      />
 
       {/* Rewards Section */}
       <View style={styles.rewardsContainer}>
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 8,
-    marginTop: 30,
+    marginTop: 20,
     width: "100%",
     justifyContent: "center",
     position: "relative",

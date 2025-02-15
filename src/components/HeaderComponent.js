@@ -5,7 +5,7 @@ import colors from "../../assets/constants/colors";
 
 const { width } = Dimensions.get("window");
 
-const HeaderComponent = ({ searchQuery, setSearchQuery }) => {
+const HeaderComponent = ({ searchQuery, setSearchQuery,navigation }) => {
   return (
     <View style={styles.header}>
       {/* History Icon */}
@@ -26,7 +26,7 @@ const HeaderComponent = ({ searchQuery, setSearchQuery }) => {
       </View>
 
       {/* Settings Icon */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("SettingsScreen")}>
         <Ionicons name="settings-outline" size={28} color={colors.text} />
       </TouchableOpacity>
     </View>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     marginLeft: 5,
+    borderRadius: 20,
     backgroundColor: colors.background,
     fontFamily: "Antebas-Regular",
   },

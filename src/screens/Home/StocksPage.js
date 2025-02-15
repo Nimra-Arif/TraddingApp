@@ -78,7 +78,7 @@ const StocksScreen = ({ navigation, route }) => {
 
         {/* Buy Button */}
         <TouchableOpacity style={styles.buyButton}
-        onPress={() => navigation.navigate("DepositScreen")}
+        onPress={() => navigation.navigate("DepositScreen", { type: "Deposit" })}
         >
           <FontAwesome5 name="dollar-sign" size={16} color="white" style={styles.buyButtonIcon} />
           <Text style={styles.buyButtonText}>Buy</Text>
@@ -137,12 +137,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    backgroundColor: colors.mainColor,
+    backgroundColor: "green",
     paddingVertical: 15,
     borderRadius: 10,
   },
   buyButtonIcon: { marginRight: 8 },
-  buyButtonText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
+  buyButtonText: { color: colors.text, fontSize: 18, fontWeight: 'bold' },
 });
 
 export default StocksScreen;

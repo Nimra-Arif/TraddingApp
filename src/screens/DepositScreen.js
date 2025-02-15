@@ -9,7 +9,8 @@ import BalanceSelectionSheet from "../components/BalanceSelectionSheet";
 
 const { width } = Dimensions.get("window");
 
-const DepositScreen = ({ navigation }) => {
+const DepositScreen  = ({ navigation, route }) => {
+    const { type = "Deposit" } = route.params || {}; 
     const [amount, setAmount] = useState("100");
     const [swipeX] = useState(new Animated.Value(0));
     const [showPaymentSheet, setShowPaymentSheet] = useState(false);
@@ -57,7 +58,7 @@ const DepositScreen = ({ navigation }) => {
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>
-                <Text style={styles.title}>Deposit</Text>
+            <Text style={styles.title}>{type}</Text>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>
                     <Ionicons name="close" size={24} color="white" />
                 </TouchableOpacity>
@@ -73,13 +74,13 @@ const DepositScreen = ({ navigation }) => {
 
             {/* Amount */}
             <Text style={styles.amount}>${amount}</Text>
-
+{type!="Send" &&
             <TouchableOpacity style={styles.paymentContainer} onPress={() => setShowPaymentSheet(true)}>
                 {selectedIcon}
                 <Text style={styles.paymentText}>{paymentMethod}</Text>
                 <AntDesign name="down" size={14} color="white" />
             </TouchableOpacity>
-
+}
 
 
             {/* Quick Amount Options */}

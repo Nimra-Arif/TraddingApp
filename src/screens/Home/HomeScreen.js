@@ -55,7 +55,9 @@ const HomeScreen = ({ navigation }) => {
       backgroundColor: colors.background,
       paddingTop: Platform.OS === "android" ? 35 : 0
     }}>
-<HeaderComponent searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+<HeaderComponent searchQuery={searchQuery} setSearchQuery={setSearchQuery} 
+navigation={navigation}
+/>
 
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}
         onScroll={({ nativeEvent }) => {
