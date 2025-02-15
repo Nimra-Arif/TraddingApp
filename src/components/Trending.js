@@ -4,7 +4,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
 
-const Trending = ({ trending, visibleTrending, loading, searchQuery, navigation }) => {
+const Trending = ({ trending, visibleTrending, loading,  navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>
@@ -12,7 +12,6 @@ const Trending = ({ trending, visibleTrending, loading, searchQuery, navigation 
       </Text>
       <ScrollView>
         {trending
-          .filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
           .slice(0, visibleTrending)
           .map((item, index) => (
             <TouchableOpacity key={index} onPress={() => navigation.navigate("StocksScreen", { item })}>

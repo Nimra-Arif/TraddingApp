@@ -6,7 +6,7 @@ import HeaderComponent from "../../components/HeaderComponent";
 
 const { width } = Dimensions.get("window");
 
-const RewardsScreen = () => {
+const RewardsScreen = ({navigation}) => {
   // Share Functionality
   const onShare = async () => {
     try {

@@ -25,7 +25,6 @@ const HoldingsScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       {/* Header Component */}
       <HeaderComponent 
-      
       navigation={navigation}
       />
 
@@ -136,6 +135,7 @@ const styles = StyleSheet.create({
   },
   balanceContainer: {
     alignItems: "center",
+    justifyContent:"center",
     marginTop: 20,
   },
   balanceLabel: {
@@ -156,7 +156,8 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
+    alignItems:"center",
     paddingVertical: 30,
     borderBottomWidth: 1,
     borderBottomColor: colors.accents,

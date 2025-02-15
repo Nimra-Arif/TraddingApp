@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TextInput, TouchableOpacity, StyleSheet, Dimensions, Platform } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons ,Entypo} from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
 
 const { width } = Dimensions.get("window");
@@ -9,8 +9,10 @@ const HeaderComponent = ({ searchQuery, setSearchQuery,navigation }) => {
   return (
     <View style={styles.header}>
       {/* History Icon */}
-      <TouchableOpacity>
-        <Ionicons name="time-outline" size={28} color={colors.text} />
+      <TouchableOpacity
+      onPress={() => navigation.navigate("ActivityScreen")}
+      >
+        <Entypo name="back-in-time" size={28} color={colors.text} />
       </TouchableOpacity>
 
       {/* Search Bar */}

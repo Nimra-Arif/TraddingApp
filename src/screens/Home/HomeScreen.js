@@ -12,7 +12,6 @@ import HeaderComponent from '../../components/HeaderComponent';
 
 const { width } = Dimensions.get("window");
 const HomeScreen = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [visibleTrending, setVisibleTrending] = useState(5);
   const [loading, setLoading] = useState(false);
   const topGainers = [
@@ -55,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
       backgroundColor: colors.background,
       paddingTop: Platform.OS === "android" ? 35 : 0
     }}>
-<HeaderComponent searchQuery={searchQuery} setSearchQuery={setSearchQuery} 
+<HeaderComponent 
 navigation={navigation}
 />
 
@@ -81,7 +80,7 @@ navigation={navigation}
         </View>
         <TopGainers topGainers={topGainers} />
         <Watchlist watchlist={watchlist} removeItem={removeItem} navigation={navigation} />
-        <Trending trending={trending} visibleTrending={visibleTrending} loading={loading} searchQuery={searchQuery}  navigation={navigation}/>
+        <Trending trending={trending} visibleTrending={visibleTrending} loading={loading} navigation={navigation}/>
       </ScrollView>
     </SafeAreaView>
   );

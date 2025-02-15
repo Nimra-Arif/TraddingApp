@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,25 +8,26 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import { Ionicons, Entypo, FontAwesome, Feather,FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome, Feather, FontAwesome5, Entypo ,Ionicons} from "@expo/vector-icons";
 import colors from "../../../assets/constants/colors";
+import ScreenHeader from "../../components/ScreenHeader"; // Import the ScreenHeader component
+import SupportCenterModal from "./SupportCenterModal";
 
 const SettingsScreen = ({ navigation }) => {
   const profileImage = null; // Change to image URL if available
+  const [supportModalVisible, setSupportModalVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header: Back Button */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Settings</Text>
-      </View>
+      {/* Use ScreenHeader Component */}
+      <ScreenHeader title="Settings" navigation={navigation} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Profile Section */}
-        <TouchableOpacity style={styles.profileContainer} onPress={() => navigation.navigate("ProfileScreen")}>
+        <TouchableOpacity
+          style={styles.profileContainer}
+          onPress={() => navigation.navigate("ProfileScreen")}
+        >
           {profileImage ? (
             <Image source={{ uri: profileImage }} style={styles.avatar} />
           ) : (
@@ -40,15 +41,19 @@ const SettingsScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         {/* Settings List */}
-        <TouchableOpacity style={styles.settingItem}
-        onPress={() => navigation.navigate("NotificationsScreen")}
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => navigation.navigate("NotificationsScreen")}
         >
           <Feather name="bell" size={20} color={colors.text} />
           <Text style={styles.settingText}>Notifications</Text>
           <Entypo name="chevron-right" size={20} color={colors.subText} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => navigation.navigate("ExportKeysScreen")}
+        >
           <Feather name="lock" size={20} color={colors.text} />
           <Text style={styles.settingText}>Export keys</Text>
           <Entypo name="chevron-right" size={20} color={colors.subText} />
@@ -60,13 +65,19 @@ const SettingsScreen = ({ navigation }) => {
           <Entypo name="chevron-right" size={20} color={colors.subText} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => setSupportModalVisible(true)}
+        >
           <Feather name="help-circle" size={20} color={colors.text} />
           <Text style={styles.settingText}>Support center</Text>
           <Entypo name="chevron-right" size={20} color={colors.subText} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingItem}>
+        <TouchableOpacity
+          style={styles.settingItem}
+          onPress={() => navigation.navigate("LegalScreen")}
+        >
           <Feather name="file-text" size={20} color={colors.text} />
           <Text style={styles.settingText}>Legal & Privacy</Text>
           <Entypo name="chevron-right" size={20} color={colors.subText} />
@@ -79,22 +90,27 @@ const SettingsScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         {/* Social Icons */}
-{/* Social Icons */}
-<View style={styles.socialContainer}>
-  <TouchableOpacity style={styles.socialButton}>
-    <FontAwesome name="instagram" size={24} color={colors.text} />
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.socialButton}>
-    <Entypo name="twitter" size={24} color={colors.text} />
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.socialButton}>
-    <FontAwesome5 name="tiktok" size={24} color={colors.text} />
-  </TouchableOpacity>
-</View>
+        <View style={styles.socialContainer}>
+          <TouchableOpacity style={styles.socialButton}>
+            <FontAwesome name="instagram" size={24} color={colors.text} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialButton}>
+            <Entypo name="twitter" size={24} color={colors.text} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialButton}>
+            <FontAwesome5 name="tiktok" size={24} color={colors.text} />
+          </TouchableOpacity>
+        </View>
 
-{/* Version Info */}
-<Text style={styles.versionText}>v1.4.7</Text>
+        {/* Version Info */}
+        <Text style={styles.versionText}>v1.4.7</Text>
 
+        {/* Support Center Modal */}
+        <SupportCenterModal
+          visible={supportModalVisible}
+          onClose={() => setSupportModalVisible(false)}
+          username="alsulaitia291134661857"
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -104,35 +120,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: 50,
+    paddingTop: 30,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    position: "relative", // Ensures absolute positioning works
-  },
-  backButton: {
-    position: "absolute",
-    left: 10, // Positions it properly to the left
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontFamily: "Antebas-Bold",
-    color: colors.text,
-    textAlign: "center",
-    flex: 1, // Ensures it takes center space
-  },
-  
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
     padding: 15,
     backgroundColor: colors.card,
     borderRadius: 10,
-    // marginHorizontal: 20,
     marginTop: 10,
   },
   avatar: {
@@ -146,7 +141,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 18,
-    fontWeight:"bold",
+    fontWeight: "bold",
     color: colors.text,
   },
   email: {
@@ -158,8 +153,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     backgroundColor: colors.card,
-    // marginHorizontal: 20,
-    // marginTop: 15,
     borderRadius: 10,
   },
   settingText: {
@@ -172,7 +165,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 30,
-    gap: 15, // Ensures spacing between icons
+    gap: 15,
   },
   socialButton: {
     width: 50,
@@ -183,7 +176,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  
   versionText: {
     fontSize: 14,
     color: colors.subText,

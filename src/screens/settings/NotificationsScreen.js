@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome5 ,MaterialCommunityIcons} from "@expo/vector-icons";
 import colors from "../../../assets/constants/colors";
+import ScreenHeader from "../../components/ScreenHeader"; 
 
 const NotificationsScreen = ({ navigation }) => {
   const [priceAlerts, setPriceAlerts] = useState(false);
@@ -17,12 +18,7 @@ const NotificationsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Notifications</Text>
-      </View>
+      <ScreenHeader title="Notifications" navigation={navigation} />
 
       {/* Notifications Section */}
       <View style={styles.section}>
@@ -64,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: 50,
+    paddingTop: 30,
   },
   header: {
     flexDirection: "row",

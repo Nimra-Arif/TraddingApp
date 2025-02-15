@@ -8,9 +8,10 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import { Ionicons, Entypo,Feather } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import colors from "../../../assets/constants/colors";
+import ScreenHeader from "../../components/ScreenHeader"; // Import the new header component
 
 const ProfileScreen = ({ navigation }) => {
   const [profileImage, setProfileImage] = useState(null);
@@ -20,7 +21,6 @@ const ProfileScreen = ({ navigation }) => {
   // Function to pick an image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: [ImagePicker.MediaTypeOptions.PHOTO], // ✅ Updated for latest Expo version
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -34,24 +34,13 @@ const ProfileScreen = ({ navigation }) => {
   // Function to handle save action
   const handleSave = () => {
     console.log("Profile saved!", { username, profileImage });
-    // You can add API call or AsyncStorage save logic here
-    navigation.goBack(); // Navigate back after saving
+    navigation.goBack();
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header: Back Button + Save Button */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color={colors.text} />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>Profile</Text>
-
-        <TouchableOpacity onPress={handleSave}>
-        <Feather name="save" size={24} color={colors.text} />
-        </TouchableOpacity>
-      </View>
+      {/* Use the ScreenHeader Component */}
+      <ScreenHeader title="Profile" navigation={navigation} />
 
       {/* Profile Picture */}
       <View style={styles.profileContainer}>
@@ -96,33 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: 50,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
-  backButton: {
-    padding: 5,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontFamily: "Antebas-Bold",
-    color: colors.text,
-  },
-  saveButton: {
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    backgroundColor: colors.mainColor,
-    borderRadius: 8,
-  },
-  saveText: {
-    color: colors.text,
-    fontSize: 14,
-    fontFamily: "Antebas-Bold",
+    paddingTop: 30,
   },
   profileContainer: {
     alignItems: "center",

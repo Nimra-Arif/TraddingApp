@@ -11,6 +11,9 @@ import DepositScreen  from "../screens/DepositScreen"
 import ProfileScreen from "../screens/holdings/ProfileScreen"
 import SettingsScreen from "../screens/settings/SettingsScreen"
 import NotificationsScreen from "../screens/settings/NotificationsScreen"
+import ExportKeysScreen from "../screens/settings/ExportKeysScreen"
+import LegalScreen from "../screens/settings/LegalScreen"
+import ActivityScreen from "../screens/ActivityScreen"
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
@@ -28,6 +31,9 @@ export default function MainNavigator() {
       <Stack.Screen name="ProfileScreen" component={ProfileScreen}/>
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="NotificationsScreen" component={NotificationsScreen}/>
+      <Stack.Screen name="ExportKeysScreen" component={ExportKeysScreen} />
+      <Stack.Screen name="LegalScreen" component={LegalScreen}/>
+      <Stack.Screen name="ActivityScreen" component={ActivityScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
