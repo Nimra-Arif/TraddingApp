@@ -10,6 +10,7 @@ import StocksScreen from "../screens/Home/StocksPage"
 import DepositScreen  from "../screens/DepositScreen"
 import ProfileScreen from "../screens/holdings/ProfileScreen"
 import SettingsScreen from "../screens/settings/SettingsScreen"
+import NotificationsScreen from "../screens/settings/NotificationsScreen"
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
@@ -26,6 +27,7 @@ export default function MainNavigator() {
       <Stack.Screen name="DepositScreen" component={DepositScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen}/>
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen name="NotificationsScreen" component={NotificationsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

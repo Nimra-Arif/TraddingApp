@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Switch,
 } from "react-native";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5 ,MaterialCommunityIcons} from "@expo/vector-icons";
 import colors from "../../../assets/constants/colors";
 
 const NotificationsScreen = ({ navigation }) => {
@@ -35,7 +35,7 @@ const NotificationsScreen = ({ navigation }) => {
       {/* Notification Toggles */}
       <View style={styles.toggleContainer}>
         <View style={styles.toggleItem}>
-          <FontAwesome5 name="wave-square" size={20} color={colors.text} style={styles.icon} />
+          <MaterialCommunityIcons name="triangle-wave" size={20} color={colors.text} style={styles.icon} />
           <Text style={styles.toggleText}>Price alerts</Text>
           <Switch
             value={priceAlerts}
@@ -46,7 +46,7 @@ const NotificationsScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.toggleItem}>
-          <FontAwesome5 name="percentage" size={20} color={colors.text} style={styles.icon} />
+          <FontAwesome5 name="gift" size={20} color={colors.text} style={styles.icon} />
           <Text style={styles.toggleText}>Referral rewards</Text>
           <Switch
             value={referralRewards}
@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
   toggleItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.card,
+    backgroundColor: colors.background,
     padding: 15,
     borderRadius: 10,
-    marginBottom: 15,
+    margintop: 0,
   },
   icon: {
     marginRight: 10,
