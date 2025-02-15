@@ -54,9 +54,9 @@ const HomeScreen = ({ navigation }) => {
       backgroundColor: colors.background,
       paddingTop: Platform.OS === "android" ? 35 : 0
     }}>
-<HeaderComponent 
-navigation={navigation}
-/>
+      <HeaderComponent
+        navigation={navigation}
+      />
 
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}
         onScroll={({ nativeEvent }) => {
@@ -80,7 +80,9 @@ navigation={navigation}
         </View>
         <TopGainers topGainers={topGainers} />
         <Watchlist watchlist={watchlist} removeItem={removeItem} navigation={navigation} />
-        <Trending trending={trending} visibleTrending={visibleTrending} loading={loading} navigation={navigation}/>
+        <Trending trending={trending} visibleTrending={visibleTrending} loading={loading} navigation={navigation}
+          title={"Trending"}
+        />
       </ScrollView>
     </SafeAreaView>
   );

@@ -14,6 +14,7 @@ import NotificationsScreen from "../screens/settings/NotificationsScreen"
 import ExportKeysScreen from "../screens/settings/ExportKeysScreen"
 import LegalScreen from "../screens/settings/LegalScreen"
 import ActivityScreen from "../screens/ActivityScreen"
+import ExploreDetailsScreen from "../screens/ExploreDetailsScreen"
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
@@ -34,6 +35,7 @@ export default function MainNavigator() {
       <Stack.Screen name="ExportKeysScreen" component={ExportKeysScreen} />
       <Stack.Screen name="LegalScreen" component={LegalScreen}/>
       <Stack.Screen name="ActivityScreen" component={ActivityScreen}/>
+      <Stack.Screen name="ExploreDetailsScreen" component={ExploreDetailsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

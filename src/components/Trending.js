@@ -4,12 +4,18 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
 
-const Trending = ({ trending, visibleTrending, loading,  navigation }) => {
+const Trending = ({ trending, visibleTrending, loading,  navigation,title }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>
-        <FontAwesome5 name="fire" size={24} /> {"  "}Trending
+      { title&&
+      
+        <Text style={styles.sectionTitle}>
+        {title=="Trending" &&
+          <FontAwesome5 name="fire" size={24} />}
+         {"  "}{title}
       </Text>
+    }
+      
       <ScrollView>
         {trending
           .slice(0, visibleTrending)
@@ -33,7 +39,9 @@ const Trending = ({ trending, visibleTrending, loading,  navigation }) => {
               </View>
             </TouchableOpacity>
           ))}
-        {loading && <ActivityIndicator style={styles.loadingIndicator} />}
+        {loading && <ActivityIndicator style={styles.loadingIndicator}
+        size="large" 
+        />}
       </ScrollView>
     </View>
   );
@@ -103,6 +111,7 @@ const styles = StyleSheet.create({
   },
   loadingIndicator: {
     margin: 20,
+    color:colors.mainColor
   },
 });
 
