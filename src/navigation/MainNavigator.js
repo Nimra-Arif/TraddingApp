@@ -23,9 +23,9 @@ export default function MainNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="Onboarding" component={OnboardingPage1} /> */}
-      {/* <Stack.Screen name="SignInScreen" component={SignInScreen}/> */}
-      {/* <Stack.Screen name="VerifyEmailScreen" component={VerifyEmailScreen}/> */}
+      <Stack.Screen name="Onboarding" component={OnboardingPage1} />
+      <Stack.Screen name="SignInScreen" component={SignInScreen}/>
+      <Stack.Screen name="VerifyEmailScreen" component={VerifyEmailScreen}/>
       <Stack.Screen name="Tabs" component={TabNavigator} />
       <Stack.Screen name="StocksScreen" component={StocksScreen}/>
       <Stack.Screen name="DepositScreen" component={DepositScreen} />
