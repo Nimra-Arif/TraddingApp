@@ -2,19 +2,19 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Image } from "react-native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
-
+import icons from "../../assets/constants/icons";
 const BalanceSelectionSheet = ({ visible, onClose, selectedBalance, setSelectedBalance, setBalanceIcon }) => {
   const balances = [
     { 
       name: "Cash", 
       amount: "$0.00", 
-      icon: <FontAwesome5 name="dollar-sign" size={18} color="white" />, 
+      icon: <Image source={icons.dollar_circle} style={{ width: 24, height: 24 }} />,
       iconType: "cash"
     },
     { 
       name: "Solana", 
       amount: "$0.00", 
-      icon: <Image source={require("../../assets/images/solana.png")} style={{ width: 24, height: 24 }} />,
+      icon: <Image source={icons.Solana} style={{ width: 24, height: 24 }} />,
       iconType: "solana",
       subText: "0 SOL"
     },

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     textAlign: "center",

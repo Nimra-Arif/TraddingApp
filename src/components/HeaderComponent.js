@@ -8,13 +8,13 @@ import {
   Keyboard,
   Text,
   ScrollView,
-  ActivityIndicator,
+  ActivityIndicator,Image
 } from "react-native";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
 import Trending from "./Trending";
 import HorizontalList from "./HorizontalList";
-
+import icons from "../../assets/constants/icons";
 const { width, height } = Dimensions.get("window");
 
 // **Recents (With Images)**
@@ -51,6 +51,8 @@ const HeaderComponent = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [visibleTopCaps, setVisibleTopCaps] = useState(5);
 
+
+
   const handleBlur = () => {
     setIsSearchFocused(false);
     Keyboard.dismiss();
@@ -82,7 +84,12 @@ const HeaderComponent = ({ navigation }) => {
       <View style={styles.header}>
         {!isSearchFocused && (
           <TouchableOpacity onPress={() => navigation.navigate("ActivityScreen")}>
-            <Entypo name="back-in-time" size={28} color={colors.text} />
+            <Image source={icons.history_activity}
+            style={{
+              width:26,
+              height:26,
+            }}
+            color={colors.text} />
           </TouchableOpacity>
         )}
 
@@ -93,14 +100,14 @@ const HeaderComponent = ({ navigation }) => {
         >
           {isSearchFocused ? (
             <TouchableOpacity onPress={handleBlur} style={styles.backButton}>
-              <Ionicons name="arrow-back" size={22} color={colors.text} />
+              <Ionicons name="arrow-back" size={22} color={colors.text}  style={styles.searchIcon}/>
             </TouchableOpacity>
           ) : (
             <Ionicons name="search-outline" size={20} color={colors.subText} style={styles.searchIcon} />
           )}
 
           <TextInput
-            placeholder="Search name or address"
+            placeholder={!isSearchFocused? "Search":"Search name or address"}
             placeholderTextColor={colors.subText}
             style={styles.searchInput}
             value={searchQuery}
@@ -111,7 +118,7 @@ const HeaderComponent = ({ navigation }) => {
 
         {!isSearchFocused && (
           <TouchableOpacity onPress={() => navigation.navigate("SettingsScreen")}>
-            <Ionicons name="settings-outline" size={28} color={colors.text} />
+            <Ionicons name="settings-outline" size={26} color={colors.text} />
           </TouchableOpacity>
         )}
       </View>
@@ -180,10 +187,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
   searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: colors.text,
     fontFamily: "Antebas-Regular",
+    flex: 1,
+    fontSize: 14,
+    color: colors.text,
+    
   },
   searchOverlay: {
     position: "absolute",
@@ -203,6 +211,9 @@ const styles = StyleSheet.create({
   loadingIndicator: {
     marginVertical: 20,
   },
+  searchIcon:{
+    marginRight:10,
+  }
 });
 
 export default HeaderComponent;

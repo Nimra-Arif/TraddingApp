@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet,Image } from 'react-native';
 import colors from '../../assets/constants/colors';
+import icons from "../../assets/constants/icons";
 import data from "../../assets/constants/data"
 const StockInfo = () => {
   return (
@@ -15,10 +15,11 @@ const StockInfo = () => {
         <View style={styles.balanceInfo}>
           <View style={styles.row}>
             <Text style={styles.subText}>Value</Text>
-            <Text style={styles.subText}>Quantity</Text>
+            <Text style={styles.balanceValue}>$0.00</Text>
+            
           </View>
           <View style={styles.row}>
-            <Text style={styles.balanceValue}>$0.00</Text>
+          <Text style={styles.subText}>Quantity</Text>
             <Text style={styles.balanceValue}>0</Text>
           </View>
         </View>
@@ -31,7 +32,7 @@ const StockInfo = () => {
         {/* Market Cap */}
         <TouchableOpacity style={styles.infoItem}>
           <View style={styles.infoRow}>
-            <Ionicons name="bar-chart-outline" size={24} color="white" />
+          <Image source={icons.marketcap} style={styles.iconStyle} />
             <Text style={styles.infoText}>Market cap</Text>
           </View>
           <Text style={styles.infoValue}>$16.7B</Text>
@@ -40,11 +41,12 @@ const StockInfo = () => {
         {/* Volume */}
         <TouchableOpacity style={styles.infoItem}>
           <View style={styles.infoRow}>
-            <MaterialCommunityIcons name="fire" size={24} color="white" />
+          <Image source={icons.trending_volume_fire} style={styles.iconStyle} />
+
             <View
             >
               <Text style={styles.infoText}>Volume</Text>
-              <Text style={styles.subText}>Past 24h</Text>
+              <Text style={styles.subText2}>Past 24h</Text>
             </View>
           </View>
           <Text style={styles.infoValue}>$104M</Text>
@@ -52,8 +54,7 @@ const StockInfo = () => {
 
         {/* Holders */}
         <TouchableOpacity style={styles.infoItem}>
-          <View style={styles.infoRow}>
-            <Ionicons name="people-outline" size={24} color="white" />
+          <View style={styles.infoRow}><Image source={icons.holders} style={styles.iconStyle} />
             <Text style={styles.infoText}>Holders</Text>
           </View>
           <Text style={styles.infoValue}>648K</Text>
@@ -62,7 +63,7 @@ const StockInfo = () => {
         {/* Circulating Supply */}
         <TouchableOpacity style={styles.infoItem}>
           <View style={styles.infoRow}>
-            <FontAwesome5 name="chart-pie" size={24} color="white" />
+          <Image source={icons.circulatingsupply} style={styles.iconStyle} />
             <Text style={styles.infoText}>Circulating supply</Text>
           </View>
           <Text style={styles.infoValue}>1.0B</Text>
@@ -71,7 +72,7 @@ const StockInfo = () => {
         {/* Created Date */}
         <TouchableOpacity style={styles.infoItem}>
           <View style={styles.infoRow}>
-            <MaterialCommunityIcons name="leaf" size={24} color="white" />
+          <Image source={icons.Created_leaf} style={styles.iconStyle} />
             <Text style={styles.infoText}>Created</Text>
           </View>
           <Text style={styles.infoValue}>22d 13h ago</Text>
@@ -89,9 +90,9 @@ const StockInfo = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    paddingTop: 30,
+    paddingTop: 40,
     backgroundColor: colors.background,
-    paddingBottom:200,
+    paddingBottom:250,
   },
   balanceContainer: {
     paddingBottom: 30,
@@ -99,29 +100,42 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   balanceInfo: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    width: "100%",
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    marginVertical:20,
+    },
+  
+  row: { 
+    display:"flex",
+    flexDirection:"column",
+    width:"50%",
+
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
+  
   sectionTitle: {
     color: colors.text,
     fontSize: 24,
     fontFamily: "Antebas-Bold",
+    marginLeft: 5,
+    // marginBottom:10,
   },
   subText: {
     color: colors.subText,
     fontSize: 16,
+  },
+  subText2: {
+    color: colors.subText,
+    fontSize: 14,
     marginLeft: 10,
+    marginTop:5,
     // fontFamily: "Antebas-Regular",
   },
   balanceValue: {
     color: colors.text,
     fontSize: 22,
-    fontWeight: 'bold',
   },
   aboutContainer: {
     paddingVertical: 40,
@@ -141,21 +155,27 @@ const styles = StyleSheet.create({
   },
   infoText: {
     color: colors.text,
-    fontSize: 18,
+    fontSize: 17,
     marginLeft: 10,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   infoValue: {
     color: colors.text,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '600',
   },
   disclaimerText: {
     color: colors.subText,
-    fontSize: 14,
+    fontSize: 12,
     marginTop: 20,
     lineHeight: 22,
   },
+  iconStyle: {
+    width: 26,
+    height: 26,
+    marginRight: 10,
+  },
+  
 });
 
 export default StockInfo;

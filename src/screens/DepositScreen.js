@@ -1,26 +1,32 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, PanResponder, Animated,Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, PanResponder, Animated, TextInput, Image } from "react-native";
 import { Ionicons, AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import colors from "../../assets/constants/colors";
 import PaymentMethodsSheet from "../components/PaymentMethodsSheet";
 import BalanceSelectionSheet from "../components/BalanceSelectionSheet";
-
+import icons from "../../assets/constants/icons";
 
 const { width } = Dimensions.get("window");
 
-const DepositScreen  = ({ navigation, route }) => {
-    const { type = "Deposit" } = route.params || {}; 
-    const [amount, setAmount] = useState("100");
+const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
+
+    const [amount, setAmount] = useState(""); // Empty initially
     const [swipeX] = useState(new Animated.Value(0));
     const [showPaymentSheet, setShowPaymentSheet] = useState(false);
     const [showBalanceSheet, setShowBalanceSheet] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("Apple Pay");
-    const [selectedIcon, setSelectedIcon] = useState(<FontAwesome5 name="apple" size={18} color="white" />);
+    const [selectedIcon, setSelectedIcon] = useState(<Image source={icons.apple_pay} style={{ width: 45, height: 20 }} />);
     const [selectedBalance, setSelectedBalance] = useState("Cash");
-    const [balanceIcon, setBalanceIcon] = useState(<FontAwesome5 name="dollar-sign" size={18} color="white" />);
+    const [balanceIcon, setBalanceIcon] = useState(<Image source={icons.dollar_circle} style={{ width: 17, height: 17 }} />);
+    const [swipeEnabled, setSwipeEnabled] = useState(false); // Controls button enable/disable
+    const [swiped, setSwiped] = useState(false); // Tracks if the button is swiped
 
-
+    const handleAmountChange = (value) => {
+        setAmount(value);
+        setSwipeEnabled(value.trim().length > 0);
+        setSwiped(false); // ✅ Always reset swipe state when editing input
+    };
 
     const handlePress = (value) => {
         if (value === "backspace") {
@@ -37,50 +43,64 @@ const DepositScreen  = ({ navigation, route }) => {
                 swipeX.setValue(gestureState.dx);
             }
         },
-        onPanResponderRelease: () => {
-            if (swipeX._value > width * 0.5) {
+        onPanResponderRelease: (_, gesture) => {
+            if (!swipeEnabled) {
+                Animated.spring(swipeX, { toValue: 0, useNativeDriver: false }).start();
+                return;
+            }
+
+            if (gesture.dx > width * 0.5) { // ✅ Ensure enough swipe
+                setSwiped(true);
                 Animated.timing(swipeX, {
                     toValue: width - 100,
                     duration: 300,
                     useNativeDriver: false,
                 }).start();
             } else {
+                setSwiped(false);
                 Animated.timing(swipeX, {
                     toValue: 0,
                     duration: 300,
                     useNativeDriver: false,
                 }).start();
             }
-        },
+        }
+
     });
 
     return (
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>
-            <Text style={styles.title}>{type}</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>
+                <Text style={styles.title}>{type}</Text>
+                <TouchableOpacity
+                    onPress={onClose ? onClose : () => navigation.goBack()}
+                    style={styles.closeButton}
+                >
                     <Ionicons name="close" size={24} color="white" />
                 </TouchableOpacity>
             </View>
-
-            {/* Cash Balance */}
             <TouchableOpacity style={styles.balanceContainer} onPress={() => setShowBalanceSheet(true)}>
-        {balanceIcon}
-        <Text style={styles.balanceText}>{selectedBalance}: $0.00</Text>
-        <AntDesign name="down" size={14} color="white" />
-      </TouchableOpacity>
-
-
-            {/* Amount */}
-            <Text style={styles.amount}>${amount}</Text>
-{type!="Send" &&
-            <TouchableOpacity style={styles.paymentContainer} onPress={() => setShowPaymentSheet(true)}>
-                {selectedIcon}
-                <Text style={styles.paymentText}>{paymentMethod}</Text>
+                {balanceIcon}
+                <Text style={styles.balanceText}>{selectedBalance}: $0.00</Text>
                 <AntDesign name="down" size={14} color="white" />
             </TouchableOpacity>
-}
+            <TextInput
+                style={styles.amount}
+                placeholder="$100"
+                placeholderTextColor={colors.subText}
+                value={amount}
+                onChangeText={handleAmountChange}  // ✅ Use the updated function
+                keyboardType="numeric"
+            />
+
+            {type != "Send" &&
+                <TouchableOpacity style={styles.paymentContainer} onPress={() => setShowPaymentSheet(true)}>
+                    {selectedIcon}
+                    <Text style={styles.paymentText}>{paymentMethod}</Text>
+                    <AntDesign name="down" size={14} color="white" />
+                </TouchableOpacity>
+            }
 
 
             {/* Quick Amount Options */}
@@ -113,13 +133,25 @@ const DepositScreen  = ({ navigation, route }) => {
                     </View>
                 ))}
             </View>
-
-            {/* Swipe to Deposit */}
-            <View style={styles.swipeWrapper}>
+            <View style={[
+                styles.swipeWrapper,
+                {
+                    opacity: swipeEnabled ? 1 : 0.5,
+                    borderColor: swipeEnabled ? colors.mainColor : colors.accents,
+                    backgroundColor: swiped ? colors.active : colors.background // ✅ Ensure proper background color
+                }
+            ]}>
                 <Animated.View
                     {...panResponder.panHandlers}
-                    style={[styles.swipeButton, { transform: [{ translateX: swipeX }] }]}
+                    style={[
+                        styles.swipeButton,
+                        {
+                            transform: [{ translateX: swipeX }], backgroundColor: swiped ? colors.active : (swipeEnabled ? colors.mainColor : colors.accents),
+                            backgroundColor: swiped ? colors.subText : (swipeEnabled ? colors.mainColor : colors.accents),
+                        }
+                    ]}
                 >
+
                     <AntDesign name="forward" size={24} color={colors.subText} />
 
                 </Animated.View>
@@ -132,13 +164,13 @@ const DepositScreen  = ({ navigation, route }) => {
                 setSelectedMethod={setPaymentMethod}
                 setSelectedIcon={setSelectedIcon}
             />
-           <BalanceSelectionSheet
-        visible={showBalanceSheet}
-        onClose={() => setShowBalanceSheet(false)}
-        selectedBalance={selectedBalance}
-        setSelectedBalance={setSelectedBalance}
-        setBalanceIcon={setBalanceIcon}  // ✅ Fix: Passing setBalanceIcon
-      />
+            <BalanceSelectionSheet
+                visible={showBalanceSheet}
+                onClose={() => setShowBalanceSheet(false)}
+                selectedBalance={selectedBalance}
+                setSelectedBalance={setSelectedBalance}
+                setBalanceIcon={setBalanceIcon}  // ✅ Fix: Passing setBalanceIcon
+            />
         </View>
     );
 };
@@ -149,8 +181,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         paddingHorizontal: 20,
-        paddingTop: 60,
-
+        paddingTop: 30,
+        height:"100%"
     },
     header: {
         flexDirection: "row",
@@ -162,7 +194,7 @@ const styles = StyleSheet.create({
 
     title: {
         color: colors.text,
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: "Antebas-Bold",
         marginTop: 10,
 
@@ -189,7 +221,7 @@ const styles = StyleSheet.create({
     },
     balanceText: {
         color: colors.text,
-        fontSize: 16,
+        fontSize: 14,
         marginLeft: 10,
         flex: 1,
 
@@ -217,7 +249,7 @@ const styles = StyleSheet.create({
     },
     paymentText: {
         color: colors.text,
-        fontSize: 16,
+        fontSize: 14,
         marginLeft: 10,
         flex: 1,
     },
@@ -228,7 +260,7 @@ const styles = StyleSheet.create({
     },
     quickAmountButton: {
         backgroundColor: colors.accents,
-        paddingVertical: 10,
+        paddingVertical: 8,
         paddingHorizontal: 20,
         borderRadius: 20
     },
@@ -261,7 +293,7 @@ const styles = StyleSheet.create({
     swipeWrapper: {
         width: "100%",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 10,
         borderWidth: 1,
         borderColor: colors.accents,
         borderRadius: 50,

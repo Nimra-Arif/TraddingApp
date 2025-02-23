@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   label: {
+    fontSize: 14,
     fontFamily: "Antebas-Bold",
     color: colors.subText,
   },
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     color: colors.text,
-    fontSize: 16,
+    fontSize: 15,
     marginTop: 5,
     borderColor: colors.accents,
     borderWidth: 1,

@@ -64,7 +64,8 @@ const RewardsScreen = ({navigation}) => {
 
         {/* Footer Text */}
         <Text style={styles.footerText}>
-          * Earn <Text style={{ fontWeight: 'bold', color: colors.text }}>50%</Text> of all trading fees from each friend you refer.
+          * Refer friends, and every time they trade, you win
+        Memecoins—earn up to  <Text style={{ fontWeight: 'bold', color: colors.text }}>$100</Text>  for every referral!
         </Text>
       </View>
     </SafeAreaView>
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rewardLabel: {
-    fontSize: 16,
+    fontSize: 17,
     color: colors.subText,
     fontFamily: "Antebas-Regular",
   },
@@ -142,12 +143,12 @@ const styles = StyleSheet.create({
   },
   inviteText: {
     fontSize: 16,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Antebas-Bold",
     color: colors.text,
     textAlign: "center",
   },
   footerText: {
-    fontSize: 13,
+    fontSize: 12,
     color: colors.subText,
     textAlign: "center",
     marginTop: 15,

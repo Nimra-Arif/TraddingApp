@@ -3,21 +3,34 @@ import { View, Text, Image, ScrollView, ActivityIndicator, StyleSheet, Touchable
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
-
-const Trending = ({ trending, visibleTrending, loading,  navigation,title }) => {
+import data from "../../assets/constants/data";
+import icons from "../../assets/constants/icons"
+const Trending = ({ visibleTrending, loading,  navigation,title }) => {
   return (
     <View style={styles.container}>
       { title&&
-      
-        <Text style={styles.sectionTitle}>
-        {title=="Trending" &&
-          <FontAwesome5 name="fire" size={24} />}
-         {"  "}{title}
+<View
+style={{
+  display:"flex",
+  flexDirection:"row",
+  alignItems:"center",
+  paddingHorizontal:10
+}}
+>{title=="Trending" &&<Image
+source={icons.trending_volume_fire}
+style={{
+    width:20,
+    height:20,
+}}
+ />}
+  <Text style={styles.sectionTitle}>
+         {title}
       </Text>
+  </View>
     }
       
       <ScrollView>
-        {trending
+        {data.trending
           .slice(0, visibleTrending)
           .map((item, index) => (
             <TouchableOpacity key={index} onPress={() => navigation.navigate("StocksScreen", { item })}>
@@ -40,7 +53,7 @@ const Trending = ({ trending, visibleTrending, loading,  navigation,title }) => 
             </TouchableOpacity>
           ))}
         {loading && <ActivityIndicator style={styles.loadingIndicator}
-        size="large" 
+        size="small" 
         />}
       </ScrollView>
     </View>
@@ -52,7 +65,7 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     marginLeft: 10,
@@ -76,21 +89,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   trendingName: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     marginBottom: 5,
   },
   trendingCap: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.subText,
   },
   trendingPriceContainer: {
     alignItems: "flex-end",
   },
   trendingPrice: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 15,
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginBottom: 5,
   },
@@ -99,9 +112,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   trendingChange: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "bold",
     marginLeft: 5,
+    textAlignVertical:"bottom"
   },
   greenText: {
     color: colors.buy,
@@ -110,8 +124,8 @@ const styles = StyleSheet.create({
     color: colors.sell,
   },
   loadingIndicator: {
-    margin: 20,
-    color:colors.mainColor
+    margin: 15,
+    color:colors.text
   },
 });
 

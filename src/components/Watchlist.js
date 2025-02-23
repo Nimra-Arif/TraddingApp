@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,104 +6,166 @@ import {
   Animated,
   PanResponder,
   TouchableOpacity,
+  Dimensions,
   StyleSheet,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
-
-const Watchlist = ({ watchlist, removeItem, navigation }) => {
+import ConfirmModal from "./ConfirmModal"; // Import the modal component
+import data from "../../assets/constants/data";
+import icons from "../../assets/constants/icons";
+const { width, height } = Dimensions.get("window");
+const Watchlist = ({  navigation }) => {
   const positionRefs = useRef({});
+  const [watchlist, setWatchlist] = useState(data.watchlistData);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [activeSwipe, setActiveSwipe] = useState(null); // Track which item is swiped
+
+  const removeItem = (id) => {
+    setWatchlist(watchlist.filter(item => item.id !== id));
+  };
 
   return (
     <>
-      {watchlist.length>0 &&
-      <View style={styles.container}>
-      <Text style={styles.sectionTitle}>
-        <FontAwesome5 name="eye" size={24} /> {"  "}Watchlist
-      </Text>
-      {watchlist.map((item) => {
-        // Ensure each item has a unique animated value
-        if (!positionRefs.current[item.id]) {
-          positionRefs.current[item.id] = new Animated.Value(0);
-        }
-
-        const panResponder = PanResponder.create({
-          onMoveShouldSetPanResponder: () => true,
-          onPanResponderMove: (_, gesture) => {
-            if (gesture.dx < 0) {
-              Animated.timing(positionRefs.current[item.id], {
-                toValue: gesture.dx,
-                duration: 0,
-                useNativeDriver: false,
-              }).start();
+      {watchlist.length > 0 &&
+        <View style={styles.container}>
+                      <View
+          style={{
+            display:"flex",
+            flexDirection:"row",
+            alignItems:"center",
+            paddingHorizontal:10
+          }}
+          ><Image
+          source={icons.watchlist}
+          style={{
+              width:20,
+              height:20,
+          }}
+           />
+            <Text style={styles.sectionTitle}>
+                Watchlist
+            </Text></View>
+          {watchlist.map((item) => {
+            // Ensure each item has a unique animated value
+            if (!positionRefs.current[item.id]) {
+              positionRefs.current[item.id] = new Animated.Value(0);
             }
-          },
-          onPanResponderRelease: (_, gesture) => {
-            if (gesture.dx < -100) {
-              Animated.timing(positionRefs.current[item.id], {
-                toValue: -200,
-                duration: 300,
-                useNativeDriver: false,
-              }).start(() => removeItem(item.id));
-            } else {
-              Animated.timing(positionRefs.current[item.id], {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: false,
-              }).start();
-            }
-          },
-        });
-        return (
-          <View key={item.id} style={styles.itemContainer}>
-            {/* Background Delete Button */}
-            <View style={styles.deleteBackground}>
-              <AntDesign name="minuscircle" size={24} color={colors.background} />
-            </View>
 
-            {/* Swipeable & Clickable Watchlist Item */}
-            <Animated.View
-              {...panResponder.panHandlers}
-              style={[
-                styles.watchlistItem,
-                { transform: [{ translateX: positionRefs.current[item.id] }] },
-              ]}
-            >
-              <TouchableOpacity
-                activeOpacity={1} // Prevents color change on press
-                onPress={() => navigation.navigate("StocksScreen", { item })}
-                style={styles.fullWidthTouchable}
-              >
-                <Image source={item.image} style={styles.watchlistImage} />
-                <View style={styles.watchlistDetails}>
-                  <Text style={styles.watchlistName}>{item.name}</Text>
-                  <Text style={styles.watchlistCap}>{item.cap}</Text>
+            const panResponder = PanResponder.create({
+              onMoveShouldSetPanResponder: (_, gesture) => Math.abs(gesture.dx) > 10,
+              onPanResponderGrant: () => {
+                // Reset all other items when a new one is swiped
+                Object.keys(positionRefs.current).forEach((key) => {
+                  if (parseInt(key) !== item.id) {
+                    Animated.spring(positionRefs.current[key], {
+                      toValue: 0,
+                      useNativeDriver: false,
+                    }).start();
+                  }
+                });
+                setActiveSwipe(item.id);
+              },
+              onPanResponderMove: (_, gesture) => {
+                // Prevent swiping too far left
+                if (gesture.dx < 0) {
+                  positionRefs.current[item.id].setValue(Math.max(gesture.dx, -width * 0.3));
+                }
+              },
+              onPanResponderRelease: (_, gesture) => {
+                if (gesture.dx < -width * 0.15) { // Trigger delete confirmation after 15% swipe
+                  Animated.timing(positionRefs.current[item.id], {
+                    toValue: -width * 0.3, // Fully slide left
+                    duration: 200,
+                    useNativeDriver: false,
+                  }).start(() => {
+                    setSelectedItem(item);
+                    setConfirmModalVisible(true);
+                  });
+                } else {
+                  // Smoothly reset position if not swiped enough
+                  Animated.spring(positionRefs.current[item.id], {
+                    toValue: 0, 
+                    useNativeDriver: false,
+                  }).start(() => {
+                    setActiveSwipe(null); // Ensure no stuck item
+                  });
+                }
+            },
+            
+            });
+
+            return (
+              <View key={item.id} style={styles.itemContainer}>
+                {/* Background Delete Button */}
+                <View style={styles.deleteBackground}>
+                  <AntDesign name="minuscircle" size={24} color={colors.background} />
                 </View>
-                <View style={styles.watchlistPriceContainer}>
-                  <Text style={styles.watchlistPrice}>{item.price}</Text>
-                  <View style={styles.watchlistChangeContainer}>
-                    <AntDesign
-                      name={item.up ? "caretup" : "caretdown"}
-                      size={16}
-                      color={item.up ? colors.buy : colors.sell}
-                    />
-                    <Text
-                      style={[
-                        styles.watchlistChange,
-                        item.up ? styles.greenText : styles.redText,
-                      ]}
-                    >
-                      {item.change}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </Animated.View>
-          </View>
-        );
-      })}</View>
-    }
+
+                {/* Swipeable & Clickable Watchlist Item */}
+                <Animated.View
+                  {...panResponder.panHandlers}
+                  style={[
+                    styles.watchlistItem,
+                    { transform: [{ translateX: positionRefs.current[item.id] }] },
+                  ]}
+                >
+                  <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => navigation.navigate("StocksScreen", { item })}
+                    style={styles.fullWidthTouchable}
+                  >
+                    <Image source={item.image} style={styles.watchlistImage} />
+                    <View style={styles.watchlistDetails}>
+                      <Text style={styles.watchlistName}>{item.name}</Text>
+                      <Text style={styles.watchlistCap}>{item.cap}</Text>
+                    </View>
+                    <View style={styles.watchlistPriceContainer}>
+                      <Text style={styles.watchlistPrice}>{item.price}</Text>
+                      <View style={styles.watchlistChangeContainer}>
+                        <AntDesign
+                          name={item.up ? "caretup" : "caretdown"}
+                          size={16}
+                          color={item.up ? colors.buy : colors.sell}
+                        />
+                        <Text
+                          style={[
+                            styles.watchlistChange,
+                            item.up ? styles.greenText : styles.redText,
+                          ]}
+                        >
+                          {item.change}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </Animated.View>
+              </View>
+            );
+          })}
+        </View>
+      }
+      
+      <ConfirmModal
+        isVisible={isConfirmModalVisible}
+        onClose={() => {
+          setConfirmModalVisible(false);
+          setActiveSwipe(null);
+          if (selectedItem) {
+            Animated.spring(positionRefs.current[selectedItem.id], {
+              toValue: 0,
+              useNativeDriver: false,
+            }).start();
+          }
+        }}
+        onConfirm={() => {
+          removeItem(selectedItem.id);
+          setConfirmModalVisible(false);
+          setActiveSwipe(null);
+        }}
+      />
     </>
   );
 };
@@ -115,7 +177,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.accents,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     marginLeft: 10,
@@ -139,7 +201,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     // paddingHorizontal: 10,
-    paddingVertical: 10,
+    // paddingVertical: 10,
     backgroundColor: colors.background,
   },
   fullWidthTouchable: {
@@ -161,21 +223,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   watchlistName: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     marginBottom: 5,
   },
   watchlistCap: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.subText,
   },
   watchlistPriceContainer: {
     alignItems: "flex-end",
   },
   watchlistPrice: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginBottom: 5,
   },
@@ -184,9 +246,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   watchlistChange: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "bold",
     marginLeft: 5,
+    textAlignVertical:"bottom"
   },
   greenText: {
     color: colors.buy,

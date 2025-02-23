@@ -4,12 +4,12 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
+  SafeAreaView,Image
 } from "react-native";
 import { Ionicons, Feather,Entypo } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
 import ScreenHeader from "../components/ScreenHeader";
-
+import icons from "../../assets/constants/icons"
 const ActivityScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -18,7 +18,16 @@ const ActivityScreen = ({ navigation }) => {
       <ScreenHeader title="Activity" navigation={navigation} />
       {/* Empty State Content */}
       <View style={styles.emptyStateContainer}>
-        <Entypo name="back-in-time" size={40} color={colors.subText} />
+      <Image 
+  source={icons.history_activity}  // ✅ Fix: Use `source`, not `src`
+  style={{
+    width: 32,        
+    height: 32,      
+    tintColor: colors.subText,  // ✅ Use `tintColor` instead of `color`
+    resizeMode: "contain", 
+  }} 
+/>
+
         <Text style={styles.emptyTitle}>No transactions yet</Text>
         <Text style={styles.emptySubtitle}>
           Your buys and sells will show up here.
@@ -29,7 +38,7 @@ const ActivityScreen = ({ navigation }) => {
         onPress={() => navigation.goBack()}
         >
           <Feather name="search" size={20} color={colors.text} />
-          <Text style={styles.exploreButtonText}>Explore moonshots</Text>
+          <Text style={styles.exploreButtonText}>Explore memes</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -91,8 +100,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   exploreButtonText: {
-    fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontSize: 13,
+    fontFamily: "Antebas-Regular",
     color: colors.text,
     marginLeft: 10,
   },

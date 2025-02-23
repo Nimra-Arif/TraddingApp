@@ -3,20 +3,37 @@ import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
-
-const TopGainers = ({ topGainers }) => {
+import data from "../../assets/constants/data";
+import icons from "../../assets/constants/icons";
+const TopGainers = () => {
   return (
     <View style={styles.container}>
+       <View
+          style={{
+            display:"flex",
+            flexDirection:"row",
+            alignItems:"center",
+            paddingHorizontal:10
+          }}
+          >
+      <Image
+                source={icons.top_gainers}
+                style={{
+                    width:20,
+                    height:20,
+                    
+                }}
+                 />
       <Text style={styles.sectionTitle}>
-        <Ionicons name="rocket" size={20} /> {" "}Top Gainers
-      </Text>
+       Top Gainers
+      </Text></View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {topGainers.map((item, index) => (
+        {data.topGainers.map((item, index) => (
           <View key={index} style={styles.gainerCard}>
             <Image source={item.image} style={styles.gainerImage} />
             <Text style={styles.gainerName}>{item.name}</Text>
             <View style={styles.gainerChangeContainer}>
-              <AntDesign name={item.type === "buy" ? "caretup" : "caretdown"} size={16} color={item.type === "buy" ? colors.buy : colors.sell} />
+              <AntDesign name={item.type === "buy" ? "caretup" : "caretdown"} size={17} color={item.type === "buy" ? colors.buy : colors.sell} />
               <Text style={[styles.gainerChange, item.type === "buy" ? styles.greenText : styles.redText]}>
                 {item.percent}
               </Text>
@@ -35,11 +52,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     marginLeft: 10,
     marginVertical: 20,
+    textAlign:"center",
+
   },
   gainerCard: {
     borderColor: colors.accents,
@@ -65,13 +84,16 @@ const styles = StyleSheet.create({
     fontFamily: "Antebas-Bold",
   },
   gainerChangeContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+
+      display:"flex",
+      flexDirection:"row",
+      alignItems:"center"
   },
   gainerChange: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "bold",
     marginLeft: 5,
+    textAlignVertical:"bottom",
   },
   greenText: {
     color: colors.buy,

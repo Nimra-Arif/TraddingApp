@@ -34,40 +34,43 @@ const StockDetails = ({ priceColor }) => {
 
   return (
     <View>
-      {/* Price & Change */}
       <View style={styles.priceContainer}>
         <Text style={styles.price}>${pointerValue?.value?.toFixed(2) || "N/A"}</Text>
-        <Text style={[
-          styles.priceChange, 
+        <View
+          style={{
+            display:"flex",
+            flexDirection:"row",
+            alignItems:"center",
+          }}
+          >
+        <AntDesign
+            name={pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? "caretup" : "caretdown"}
+            size={16}
+            color={pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? colors.buy : colors.sell}
+          />
+         <Text style={[
+          styles.priceChange,
           { color: pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? colors.buy : colors.sell }
         ]}>
-          <AntDesign 
-            name={pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? "caretup" : "caretdown"} 
-            size={16} 
-            color={pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? colors.buy : colors.sell} 
-          />
-          ${stockPrices.length > 0 
-            ? Math.abs(pointerValue.value - stockPrices[stockPrices.length - 1]?.value).toFixed(5) 
-            : "N/A"}
-          ({stockPrices.length > 0 
-            ? ((pointerValue.value / stockPrices[stockPrices.length - 1]?.value - 1) * 100).toFixed(2) 
-            : "N/A"}%) 
           
+          ${stockPrices.length > 0
+            ? Math.abs(pointerValue.value - stockPrices[stockPrices.length - 1]?.value).toFixed(5)
+            : "N/A"}
+          ({stockPrices.length > 0
+            ? ((pointerValue.value / stockPrices[stockPrices.length - 1]?.value - 1) * 100).toFixed(2)
+            : "N/A"}%)
           <Text style={styles.priceSubText}>
-  {selectedTimeframe === "MAX"
-    ? " All time"
-    : selectedTimeframe === "LIVE"
-    ? " Past hour"
-    : selectedTimeframe === "4H"
-    ? " Past 4 hours"
-    : selectedTimeframe === "1D"
-    ? " Past day"
-    : ` Past ${selectedTimeframe}`}
-</Text>
+            {selectedTimeframe === "MAX" ? " All time" : 
+             selectedTimeframe === "LIVE" ? " Past hour" :
+             selectedTimeframe === "4H" ? " Past 4 hours" :
+             selectedTimeframe === "1D" ? " Past day" :
+             ` Past ${selectedTimeframe}`}
+          </Text>
+          
         </Text>
+        </View>
       </View>
 
-      {/* Line Chart */}
       <View style={styles.chartContainer}>
         <LineChart
           curved
@@ -76,40 +79,44 @@ const StockDetails = ({ priceColor }) => {
           rotateLabel
           labelsExtraHeight={20}
           hideDataPoints
-          spacing={Math.min(20, width / stockPrices.length)} 
-          adjustSpacing
+          spacing={width / stockPrices.length}
+          adjustToWidth
           color={priceColor}
-          height={300} 
-          thickness={1}
+          height={300}
+          thickness={1.5}
           startFillColor={priceColor}
-          endFillColor={colors.background}
+          endFillColor="transparent"
           startOpacity={0.3}
-          endOpacity={0.1}
+          endOpacity={0}
           initialSpacing={0}
           hideYAxisText
           rulesType="dotted"
           rulesColor="transparent"
           xAxisColor="transparent"
+          width={width}
           pointerConfig={{
             showPointerStrip: true,
             pointerStripWidth: 1,
             pointerStripColor: colors.accents,
-            pointerColor: priceColor,
-            radius: 5,
+            pointerStripDashedArray: [3, 3],
+            pointerColor: "transparent",
+            pointerRadius: 0,
             pointerLabelWidth: 100,
-            pointerLabelHeight: 50,
+            pointerLabelHeight: 30,
             activatePointersOnLongPress: false,
             autoAdjustPointerLabelPosition: true,
+            stripOverPointer: true,
+            stripHeight: 320,
+            pointerVanishDelay: 0,
             onPointSelected: (items) => {
               if (items.length > 0 && items[0]?.value !== undefined) {
-                setPointerValue(items[0]); // Updates the top price dynamically
+                setPointerValue(items[0]);
               }
             },
             pointerLabelComponent: (items) => (
               <View style={styles.pointerLabel}>
-                <Text style={styles.pointerLabelText}>{items[0]?.date || "N/A"}</Text>
-                <Text style={[styles.pointerLabelValue, { color: priceColor }]}>
-                  ${items[0]?.value !== undefined ? items[0].value.toFixed(2) : "N/A"}
+                <Text style={styles.pointerLabelText}>
+                  {items[0]?.date || "N/A"}
                 </Text>
               </View>
             ),
@@ -117,7 +124,6 @@ const StockDetails = ({ priceColor }) => {
         />
       </View>
 
-      {/* Timeframe Selector */}
       <View style={styles.timeframeContainer}>
         {Object.keys(timeframes).map((timeframe) => (
           <TouchableOpacity
@@ -150,17 +156,65 @@ const StockDetails = ({ priceColor }) => {
 };
 
 const styles = StyleSheet.create({
-  priceContainer: { marginTop: 10, paddingHorizontal: 10 },
-  price: { fontSize: 36, color: colors.text, fontWeight: "bold" },
-  priceChange: { fontSize: 14, marginBottom: 10 },
-  priceSubText: { color: colors.subText, fontSize: 14 }, // ✅ Fixed missing "Past timeframe" text
-  chartContainer: { width: "100%", height: 320, justifyContent: "center", alignItems: "center", marginTop: 10 },
-  pointerLabel: { height: 50, width: 100, justifyContent: "center", borderRadius: 8, backgroundColor: "transparent", padding: 10, alignItems: "center" },
-  pointerLabelText: { color: colors.text, fontSize: 14, fontWeight: "bold" },
-  pointerLabelValue: { fontWeight: "bold", textAlign: "center" },
-  timeframeContainer: { flexDirection: "row", justifyContent: "center", marginTop: 10, marginBottom: 40 },
-  timeframeButton: { marginHorizontal: 5, paddingVertical: 8, paddingHorizontal: 15, borderRadius: 12, backgroundColor: colors.background },
-  timeframeText: { fontWeight: "bold" },
+  priceContainer: {
+    marginTop: 10,
+    paddingHorizontal: 10
+  },
+  price: {
+    fontSize: 36,
+    color: colors.text,
+    fontWeight: "bold"
+  },
+  priceChange: {
+    fontSize: 13,
+    marginBottom: 5,
+    marginLeft:2,
+  },
+  priceSubText: {
+    color: colors.subText,
+    fontSize: 13
+  },
+  chartContainer: {
+    width: width,
+    height: 320,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 0,
+    marginLeft: -10,
+    marginRight: 0,
+    marginTop: 10,
+  },
+  pointerLabel: {
+    position: 'absolute',
+    top: -15,
+    backgroundColor: 'transparent',
+    padding: 4,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  pointerLabelText: {
+    color: colors.text,
+    fontSize: 12,
+    fontWeight: "500"
+  },
+  timeframeContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 10,
+    marginBottom: 40
+  },
+  timeframeButton: {
+    marginHorizontal: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    backgroundColor: colors.background
+  },
+  timeframeText: {
+    // fontWeight: "bold",
+    fontSize: 14,
+  },
 });
 
 export default StockDetails;
+

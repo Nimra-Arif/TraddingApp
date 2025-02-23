@@ -8,16 +8,16 @@ const MoonshotsSection = ({navigation}) => {
     <View style={styles.depositContainer}>
       <View style={styles.depositHeader}>
         <Text style={styles.cashLabel}>
-          Moonshots{"  "}
+        Memes{"  "}
           <Text style={styles.cashAmount}>$0.00</Text>
         </Text>
       </View>
 
       <View style={styles.depositInfo}>
         <Ionicons name="wallet-outline" size={30} color={colors.subText} />
-        <Text style={styles.depositTitle}>No moonshots yet</Text>
+        <Text style={styles.depositTitle}>No memes yet</Text>
         <Text style={styles.depositDescription}>
-          Moonshots you buy will show up here.
+        Memes you buy will show up here.
         </Text>
       </View>
 
@@ -25,7 +25,7 @@ const MoonshotsSection = ({navigation}) => {
       onPress={() => navigation.navigate("Home")}
       >
         <Ionicons name="search-outline" size={18} color={colors.text} style={{ marginRight: 8 }} />
-        <Text style={styles.depositButtonText}>Explore moonshots</Text>
+        <Text style={styles.depositButtonText}>Explore memes</Text>
       </TouchableOpacity>
 
       {/* Footer Note */}
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderBottomWidth: 1,
     borderBottomColor: colors.accents,
+    marginBottom:30,
   },
   depositHeader: {
     flexDirection: "row",
@@ -52,12 +53,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cashLabel: {
-    fontSize: 24,
+    fontSize: 22,
     color: colors.text,
     fontWeight: "bold",
   },
   cashAmount: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "400",
     color: colors.subText,
   },

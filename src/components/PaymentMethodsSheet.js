@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Modal,Image } from "react-native";
 import { Ionicons, AntDesign, FontAwesome5, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
-
+import icons from "../../assets/constants/icons";
 const PaymentMethodsSheet = ({ visible, onClose, selectedMethod, setSelectedMethod, setSelectedIcon }) => {
   // Define payment methods with corresponding icons
   const paymentMethods = [
     { 
       name: "Apple Pay", 
-      icon: <FontAwesome5 name="apple" size={18} color={colors.text} />, 
+      icon:<Image source={icons.apple_pay}  style={{ width: 40, height: 20 }}  color={colors.text} />, 
       methodIcon: "apple",
     },
     { 

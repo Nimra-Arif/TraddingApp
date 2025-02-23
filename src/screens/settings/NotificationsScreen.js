@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     color: colors.text,
+    fontFamily: "Antebas-Bold",
   },
 });
 

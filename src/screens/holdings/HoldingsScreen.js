@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   View,
   Text,
@@ -8,91 +8,124 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
-  Platform
+  Platform,Modal
 } from "react-native";
 import { Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import colors from "../../../assets/constants/colors";
 import HeaderComponent from "../../components/HeaderComponent";
 import CashSection from "../../components/CashSection";
 import MoonshotsSection from "../../components/MoonshotsSection";
-
+import icons from "../../../assets/constants/icons"
+import DepositScreen from "../DepositScreen";
 const { width } = Dimensions.get("window");
 
-const HoldingsScreen = ({navigation}) => {
-  const profileImage = null; // Change to image URL if available
+const HoldingsScreen = ({ navigation }) => {
+  const profileImage = null; 
+  const [modalVisible, setModalVisible] = useState(false);
+const [modalType, setModalType] = useState("Deposit"); // Default to Deposit
+
+const openModal = (type) => {
+  setModalType(type);
+  setModalVisible(true);
+};
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Component */}
-      <HeaderComponent 
-      navigation={navigation}
+      <HeaderComponent
+        navigation={navigation}
       />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Profile Section */}
         <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")} style={styles.profileContainer}>
-  <View style={styles.avatarWrapper}>
-    {profileImage ? (
-      <Image source={{ uri: profileImage }} style={styles.avatar} />
-    ) : (
-      <Ionicons name="person-circle-outline" size={90} color={colors.subText} />
-    )}
-    <View style={styles.editIcon}>
-      <Entypo name="edit" size={15} color={colors.text} />
-    </View>
-  </View>
-  <Text style={styles.username}>@alsulaitia291134661857</Text>
-</TouchableOpacity>
+          <View style={styles.avatarWrapper}>
+            {profileImage ? (
+              <Image source={{ uri: profileImage }} style={styles.avatar} />
+            ) : (
+              <Ionicons name="person-circle-outline" size={90} color={colors.subText} />
+            )}
+            <View style={styles.editIcon}>
+              <Entypo name="edit" size={15} color={colors.text} />
+            </View>
+          </View>
+          <Text style={styles.username}>@alsulaitia291134661857</Text>
+        </TouchableOpacity>
 
 
         {/* Balance Section */}
         <View style={styles.balanceContainer}>
-          <Text style={styles.balanceLabel}>Total in Moonshot</Text>
+          <Text style={styles.balanceLabel}>Total in Memes</Text>
           <Text style={styles.balanceAmount}>$0.00</Text>
+          <View
+          style={{
+            display:"flex",
+            flexDirection:"row",
+            alignItems:"center"
+          }}
+          >
+          <Ionicons name="triangle" size={13} color={colors.subText} />
           <Text style={styles.balanceChange}>
-            <Ionicons name="triangle" size={12} color={colors.subText} /> 0% All time
+             {" "}0% All time
           </Text>
+          </View>
         </View>
 
         {/* Quick Action Buttons */}
         <View style={styles.actionsContainer}>
           <View style={styles.actionItem}>
-            <TouchableOpacity style={styles.actionButton}
-            onPress={() => navigation.navigate("DepositScreen", { type: "Deposit" })}
-            >
-              <FontAwesome5 name="dollar-sign" size={20} color={colors.text} />
-            </TouchableOpacity>
-            <Text style={styles.actionText}>Deposit</Text>
+          <TouchableOpacity style={styles.actionButton} onPress={() => openModal("Deposit")}>
+  <Image source={icons.dollar_filled} style={styles.image} />
+</TouchableOpacity>
+<Text style={styles.actionText}>Deposit</Text>
           </View>
 
           <View style={styles.actionItem}>
             <TouchableOpacity style={styles.actionButton}
-            onPress={() => navigation.navigate("DepositScreen", { type: "Send" })}
+              onPress={() => openModal("Send")}
             >
-              <FontAwesome5 name="paper-plane" size={20} color={colors.text} />
+              <Image
+                source={icons.send_filled}
+                style={styles.image}
+              />
             </TouchableOpacity>
             <Text style={styles.actionText}>Send</Text>
           </View>
 
           <View style={styles.actionItem}>
-            <TouchableOpacity style={styles.actionButton}
-            onPress={() => navigation.navigate("DepositScreen", { type: "Withdraw" })}
-            >
-              <FontAwesome5 name="exchange-alt" size={20} color={colors.text} />
-            </TouchableOpacity>
-            <Text style={styles.actionText}>Withdraw</Text>
+          <TouchableOpacity style={styles.actionButton} onPress={() => openModal("Withdraw")}>
+  <Image source={icons.trade_filled} style={styles.image} />
+</TouchableOpacity>
+<Text style={styles.actionText}>Withdraw</Text>
           </View>
         </View>
 
-          {/* Cash Section */}
-        <CashSection 
-        navigation={navigation}
+        {/* Cash Section */}
+        <CashSection
+          navigation={navigation}
         />
 
-{/* Moonshots Section */}
-<MoonshotsSection
-navigation={navigation}
+        {/* Moonshots Section */}
+        <MoonshotsSection
+          navigation={navigation}
+        />
+<Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={styles.modalBackground}>
+    <View style={styles.modalContainer}>
+    <DepositScreen 
+  type={modalType} 
+  onClose={() => setModalVisible(false)} 
 />
+
+    </View>
+  </View>
+</Modal>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -106,7 +139,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 10,
     paddingBottom: 20,
   },
   avatarWrapper: {
@@ -135,7 +168,7 @@ const styles = StyleSheet.create({
   },
   balanceContainer: {
     alignItems: "center",
-    justifyContent:"center",
+    justifyContent: "center",
     marginTop: 20,
   },
   balanceLabel: {
@@ -152,12 +185,13 @@ const styles = StyleSheet.create({
   balanceChange: {
     fontSize: 14,
     color: colors.subText,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    textAlignVertical:"bottom"
   },
   actionsContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems:"center",
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 30,
     borderBottomWidth: 1,
     borderBottomColor: colors.accents,
@@ -166,18 +200,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   actionButton: {
-    width: 45,
-    height: 45,
     borderRadius: 45 / 2,
-    backgroundColor: colors.mainColor,
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal:30,
   },
   actionText: {
     fontSize: 14,
     color: colors.text,
     marginTop: 5,
     fontFamily: "Antebas-Bold",
+  },
+  image: {
+    width: 38,
+    height: 38,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    backgroundColor: colors.background,
+    height: "95%", // Adjust height for better view
   },
   
 });

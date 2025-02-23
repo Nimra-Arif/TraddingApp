@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
     flex: 1, 
   },
   categoryIcon: {
-    width: 28,
-    height: 28,
+    width: 25,
+    height: 25,
     marginRight: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 17,
     fontFamily: "Antebas-Regular",
     color: colors.text,
     textAlign: "center",

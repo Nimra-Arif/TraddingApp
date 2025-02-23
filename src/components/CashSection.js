@@ -1,9 +1,18 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React,{useState} from "react";
+import { View, Text, TouchableOpacity, StyleSheet,Image ,Modal} from "react-native";
 import { Entypo, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 import colors from "../../assets/constants/colors";
+import icons from "../../assets/constants/icons";
+import DepositScreen from "../screens/DepositScreen";
 
 const CashSection = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalType, setModalType] = useState("Deposit"); // Default to Deposit
+  
+  const openModal = (type) => {
+    setModalType(type);
+    setModalVisible(true);
+  };
   return (
     <View style={styles.depositContainer}>
       <View style={styles.depositHeader}>
@@ -13,9 +22,9 @@ const CashSection = ({navigation}) => {
         </Text>
 
         <TouchableOpacity style={styles.addButton}
-        onPress={() => navigation.navigate("DepositScreen", { type: "Deposit" })}
+       onPress={() => openModal("Deposit")}
         >
-          <Entypo name="plus" size={24} color={colors.background} />
+          <Entypo name="plus" size={32} color={colors.background} />
         </TouchableOpacity>
       </View>
 
@@ -28,11 +37,30 @@ const CashSection = ({navigation}) => {
       </View>
 
       <TouchableOpacity style={styles.depositButton}
-     onPress={() => navigation.navigate("DepositScreen", { type: "Deposit" })}
+     onPress={() => openModal("Deposit")}
       >
-        <FontAwesome5 name="dollar-sign" size={18} color={colors.text} style={{ marginRight: 8 }} />
+         <Image
+                source={icons.dollar_circle}
+                style={styles.image}
+              />
         <Text style={styles.depositButtonText}>Deposit</Text>
       </TouchableOpacity>
+      <Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={styles.modalBackground}>
+    <View style={styles.modalContainer}>
+    <DepositScreen 
+  type={modalType} 
+  onClose={() => setModalVisible(false)} 
+/>
+
+    </View>
+  </View>
+</Modal>
     </View>
   );
 };
@@ -53,19 +81,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cashLabel: {
-    fontSize: 24,
+    fontSize: 22,
     color: colors.text,
     fontWeight: "bold",
   },
   cashAmount: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "400",
     color: colors.subText,
   },
   addButton: {
     backgroundColor: colors.mainColor,
-    borderRadius: 20,
-    padding: 6,
+    alignItems:"center",
+    justifyContent:"center",
+    padding: 4,
+    width: 38,
+    height: 38,
+    borderRadius: 45 / 2,
   },
   depositInfo: {
     alignItems: "center",
@@ -96,6 +128,20 @@ const styles = StyleSheet.create({
   depositButtonText: {
     color: colors.text,
     fontSize: 14,
+  },
+  image:{
+    height:18,
+    width:18,
+    marginRight:10,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    backgroundColor: colors.background,
+    height: "95%", // Adjust height for better view
   },
 });
 

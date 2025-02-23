@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     fontFamily: "Antebas-Bold",
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "Antebas-Bold",
     color: colors.text,
     marginLeft: 10,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   itemText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
     color: colors.text,
   },

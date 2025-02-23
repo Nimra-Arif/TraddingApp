@@ -21,7 +21,7 @@ const ExportKeysScreen = ({ navigation }) => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Your wallets</Text>
         <Text style={styles.sectionSubtitle}>
-          Your moonshots are held in cryptocurrency wallets in your custody.
+          Your memes are held in cryptocurrency wallets in your custody.
           You can directly control your wallets using your secret phrase.
         </Text>
       </View>
@@ -47,7 +47,7 @@ const ExportKeysScreen = ({ navigation }) => {
 
       {/* Secret Phrase */}
       <TouchableOpacity style={styles.secretContainer}>
-        <Feather name="lock" size={22} color={colors.text} />
+        <Feather name="lock" size={20} color={colors.text} />
         <Text style={styles.secretText}>Secret phrase</Text>
         <Text style={styles.exportText}>Export</Text>
         <Ionicons name="chevron-forward" size={18} color={colors.subText} />
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   sectionSubtitle: {
-    fontSize: 15,
+    fontSize: 14,
     color: colors.subText,
     marginTop: 5,
     fontFamily: "Antebas-Regular",
@@ -116,10 +116,10 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   walletText: {
-    fontSize: 20,
+    fontSize: 18,
     color: colors.text,
     marginLeft: 10,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Antebas-Regular",
   },
   copyContainer: {
     flexDirection: "row",
@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
   },
   secretText: {
     flex: 1,
-    fontSize: 20,
-    fontFamily: "Antebas-Bold",
+    fontSize: 18,
+    fontFamily: "Antebas-Regular",
     color: colors.text,
     marginLeft: 10,
   },
   exportText: {
-    fontSize: 16,
+    fontSize: 15,
     color: colors.subText,
     marginRight: 10,
   },

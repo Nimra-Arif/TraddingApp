@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, Dimensions,Alert,Share } from "rea
 import Swiper from "react-native-swiper";
 import colors from "../../assets/constants/colors";
 import data from "../../assets/constants/data";
+import { FontWeight } from "@shopify/react-native-skia";
 
 const { width, height } = Dimensions.get("window");
 export default function OnboardingScreen({ navigation }) {
@@ -12,7 +13,7 @@ export default function OnboardingScreen({ navigation }) {
 const enableNotifications = () => {
   Alert.alert(
     "Enable Notifications?",
-    "Moonshot would like to send you notifications. These may include alerts, sounds, and icon badges.",
+    "Pumpify would like to send you notifications. These may include alerts, sounds, and icon badges.",
     [
       {
         text: "Don't Allow",
@@ -33,7 +34,7 @@ const enableNotifications = () => {
 const inviteFriend = async () => {
   try {
     const result = await Share.share({
-      message: "Join Moonshot and start earning! Use my invite link: https://moonshot.com/invite",
+      message: "Join Pumpify and start earning! Use my invite link: https://pumpify.com/invite",
     });
 
     if (result.action === Share.sharedAction) {
@@ -158,12 +159,13 @@ const styles = {
   },
   buttonText: {
     color: colors.text,
-    fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontSize: 17,
+    fontFamily: "Antebas-Regular",
+    FontWeight:"600",
   },
   footerText: {
     color: colors.subText,
     fontSize: 14,
-    fontFamily: "Antebas-Regular",
+    // fontFamily: "Antebas-Regular",
   },
 };

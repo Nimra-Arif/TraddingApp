@@ -8,5 +8,9 @@ export default {
   text:"#f5f5f5",
   subText:"#828088",
   buy:"#91fca9",
-  sell:"#ef86ae"
+  sell:"#ef86ae",
+  buyButton:"#07b854",
+  sellButton:"#ef216a",
+  buyNotif:"#63ffa1",
+  sellNotif:"#ef86ae"
 };

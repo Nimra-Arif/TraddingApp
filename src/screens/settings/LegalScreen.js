@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }from "react";
 import {
   View,
   Text,
@@ -9,31 +9,47 @@ import {
 import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../../assets/constants/colors";
 import ScreenHeader from "../../components/ScreenHeader";
+import ConfirmationPopup from "../../components/ConfirmationPopup";
+
 
 const LegalScreen = ({ navigation }) => {
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
 
       <ScreenHeader title="Legal and Privacy" navigation={navigation} />
       {/* Legal Options */}
       <TouchableOpacity style={styles.item}>
-        <MaterialCommunityIcons name="file-document-outline" size={22} color={colors.text} />
+        <MaterialCommunityIcons name="file-document-outline" size={20} color={colors.text} />
         <Text style={styles.itemText}>Terms of Service</Text>
         <Ionicons name="chevron-forward" size={20} color={colors.subText} />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.item}>
-        <Feather name="lock" size={22} color={colors.text} />
+        <Feather name="lock" size={20} color={colors.text} />
         <Text style={styles.itemText}>Privacy Policy</Text>
         <Ionicons name="chevron-forward" size={20} color={colors.subText} />
       </TouchableOpacity>
 
-      {/* Delete Account */}
-      <TouchableOpacity style={styles.item}>
-        <MaterialCommunityIcons name="trash-can-outline" size={22} color={colors.sell} />
-        <Text style={styles.deleteText}>Delete account</Text>
-        <Ionicons name="chevron-forward" size={20} color={colors.subText} />
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.item} onPress={() => setShowDeletePopup(true)}>
+  <MaterialCommunityIcons name="trash-can-outline" size={20} color={colors.sell} />
+  <Text style={styles.deleteText}>Delete account</Text>
+  <Ionicons name="chevron-forward" size={20} color={colors.subText} />
+</TouchableOpacity>
+<ConfirmationPopup
+  visible={showDeletePopup}
+  onClose={() => setShowDeletePopup(false)}
+  onConfirm={() => {
+    setShowDeletePopup(false);
+    // Perform delete account logic here
+    console.log("Account deleted");
+  }}
+  message="Are you sure you want to delete your account? This action cannot be undone."
+  confirmText="Delete"
+  cancelText="Cancel"
+/>
+
     </SafeAreaView>
   );
 };
@@ -75,15 +91,17 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     color: colors.text,
     marginLeft: 10,
+    fontFamily: "Antebas-Regular",
   },
   deleteText: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     color: colors.sell,
     marginLeft: 10,
+    fontFamily: "Antebas-Regular",
   },
 });
 
