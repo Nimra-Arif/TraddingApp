@@ -25,21 +25,33 @@ const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
     const handleAmountChange = (value) => {
         setAmount(value);
         setSwipeEnabled(value.trim().length > 0);
-        setSwiped(false); // ✅ Always reset swipe state when editing input
+        setSwiped(false); // Reset swipe state when editing input
     };
 
     const handlePress = (value) => {
         if (value === "backspace") {
-            setAmount(amount.slice(0, -1) || "0");
+            const newAmount = amount.slice(0, -1);
+            setAmount(newAmount);
+            setSwipeEnabled(newAmount.length > 0);
+            setSwiped(false);
         } else {
-            setAmount(amount === "0" ? value : amount + value);
+            const newAmount = amount === "0" ? value : amount + value;
+            setAmount(newAmount);
+            setSwipeEnabled(true);
+            setSwiped(false);
         }
     };
 
+    // Updated PanResponder code for proper swipe handling
     const panResponder = PanResponder.create({
-        onMoveShouldSetPanResponder: () => true,
+        onStartShouldSetPanResponder: () => swipeEnabled,
+        onMoveShouldSetPanResponder: () => swipeEnabled,
+        onPanResponderGrant: () => {
+            // This ensures the animation doesn't jump when starting the swipe
+            swipeX.setValue(0);
+        },
         onPanResponderMove: (evt, gestureState) => {
-            if (gestureState.dx > 0 && gestureState.dx < width - 100) {
+            if (swipeEnabled && gestureState.dx >= 0 && gestureState.dx <= width - 100) {
                 swipeX.setValue(gestureState.dx);
             }
         },
@@ -49,25 +61,26 @@ const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
                 return;
             }
 
-            if (gesture.dx > width * 0.5) { // ✅ Ensure enough swipe
+            if (gesture.dx > width * 0.5) { // Ensure enough swipe
                 setSwiped(true);
                 Animated.timing(swipeX, {
-                    toValue: width - 100,
+                    toValue: width - 120,
                     duration: 300,
                     useNativeDriver: false,
-                }).start();
+                }).start(() => {
+                    // Handle deposit action completion here
+                    console.log("Deposit action triggered");
+                });
             } else {
                 setSwiped(false);
-                Animated.timing(swipeX, {
+                Animated.spring(swipeX, {
                     toValue: 0,
                     duration: 300,
                     useNativeDriver: false,
                 }).start();
             }
         }
-
     });
-
     return (
         <View style={styles.container}>
             {/* Header */}
@@ -90,7 +103,7 @@ const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
                 placeholder="$100"
                 placeholderTextColor={colors.subText}
                 value={amount}
-                onChangeText={handleAmountChange}  // ✅ Use the updated function
+                onChangeText={handleAmountChange}
                 keyboardType="numeric"
             />
 
@@ -101,7 +114,6 @@ const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
                     <AntDesign name="down" size={14} color="white" />
                 </TouchableOpacity>
             }
-
 
             {/* Quick Amount Options */}
             <View style={styles.quickAmounts}>
@@ -133,30 +145,51 @@ const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
                     </View>
                 ))}
             </View>
+
             <View style={[
-                styles.swipeWrapper,
-                {
-                    opacity: swipeEnabled ? 1 : 0.5,
-                    borderColor: swipeEnabled ? colors.mainColor : colors.accents,
-                    backgroundColor: swiped ? colors.active : colors.background // ✅ Ensure proper background color
-                }
-            ]}>
-                <Animated.View
-                    {...panResponder.panHandlers}
-                    style={[
-                        styles.swipeButton,
-                        {
-                            transform: [{ translateX: swipeX }], backgroundColor: swiped ? colors.active : (swipeEnabled ? colors.mainColor : colors.accents),
-                            backgroundColor: swiped ? colors.subText : (swipeEnabled ? colors.mainColor : colors.accents),
-                        }
-                    ]}
-                >
+    styles.swipeWrapper,
+    {
+        opacity: swipeEnabled ? 1 : 0.5,
+        borderColor: colors.accents,
+    }
+]}>
+    {/* Background Fill - Covers swiped area fully */}
+    <Animated.View
+        style={[
+            styles.swipeBackground,
+            { width: Animated.add(swipeX, 50) } // Expands background including the button width
+        ]}
+    />
 
-                    <AntDesign name="forward" size={24} color={colors.subText} />
+    {/* Swipe Button */}
+    <Animated.View
+        {...panResponder.panHandlers}
+        style={[
+            styles.swipeButton,
+            {
+                transform: [{ translateX: swipeX }],
+                backgroundColor: swiped ? '#8c52ff' : (swipeEnabled ? colors.mainColor : colors.accents),
+                width: 80, // Keep button width fixed
+            }
+        ]}
+    >
+        <AntDesign name="doubleright" size={24} color="white" />
+    </Animated.View>
 
-                </Animated.View>
-                <Text style={styles.swipeText}>Swipe to Deposit</Text>
-            </View>
+    {/* Swipe Text */}
+    <Text style={[
+        styles.swipeText,
+        { 
+            opacity: swiped ? 0 : 1,  // Hide text when swiped
+            color: swipeEnabled ? colors.text : colors.subText
+        }
+    ]}>
+        Swipe to {type}
+    </Text>
+</View>
+
+
+
             <PaymentMethodsSheet
                 visible={showPaymentSheet}
                 onClose={() => setShowPaymentSheet(false)}
@@ -169,20 +202,19 @@ const DepositScreen = ({ navigation, route, type = "Deposit", onClose }) => {
                 onClose={() => setShowBalanceSheet(false)}
                 selectedBalance={selectedBalance}
                 setSelectedBalance={setSelectedBalance}
-                setBalanceIcon={setBalanceIcon}  // ✅ Fix: Passing setBalanceIcon
+                setBalanceIcon={setBalanceIcon}
             />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container:
-    {
+    container: {
         flex: 1,
         backgroundColor: colors.background,
         paddingHorizontal: 20,
         paddingTop: 30,
-        height:"100%"
+        height: "100%"
     },
     header: {
         flexDirection: "row",
@@ -191,13 +223,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         position: "relative"
     },
-
     title: {
         color: colors.text,
         fontSize: 18,
         fontFamily: "Antebas-Bold",
         marginTop: 10,
-
     },
     closeButton: {
         position: "absolute",
@@ -224,19 +254,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginLeft: 10,
         flex: 1,
-
-
     },
-
     amount: {
         color: colors.text,
         fontSize: 60,
         fontWeight: "bold",
         textAlign: "center",
         marginVertical: 20,
-
     },
-
     paymentContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -264,13 +289,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 20
     },
-
     quickAmountText: {
         color: colors.text,
         fontSize: 16,
-
     },
-
     keypad: {
         marginTop: 10
     },
@@ -293,38 +315,42 @@ const styles = StyleSheet.create({
     swipeWrapper: {
         width: "100%",
         alignItems: "center",
-        marginTop: 10,
+        marginTop: 20,
         borderWidth: 1,
-        borderColor: colors.accents,
         borderRadius: 50,
         height: 60,
         overflow: "hidden",
         display: "flex",
         flexDirection: "row",
+        position: "relative",
     },
     swipeButton: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.accents,
         paddingVertical: 15,
         borderRadius: 50,
-        width: 80,
-        zIndex: 1,
         height: 60,
-        // position: "absolute", 
+        zIndex: 1,
     },
 
     swipeText: {
-        color: colors.subText,
         fontSize: 18,
-        marginLeft: 20,
+        position: "absolute",
+        width: "100%",
         textAlign: "center",
-        alignSelf: "center",
-        justifyContent: "center",
         zIndex: 0,
         fontFamily: "Antebas-Regular",
     },
+    swipeBackground: {
+        position: "absolute",
+        height: "100%",
+        backgroundColor: "#8c52ff", // Color of swiped area
+        borderRadius: 50,  // Ensures smooth rounded edges
+        left: 0, // Start from the left edge
+    },
+    
+    
 });
 
 export default DepositScreen;

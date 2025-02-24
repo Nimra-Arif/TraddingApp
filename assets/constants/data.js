@@ -4,7 +4,7 @@ export default {
       title: "Prices change quickly",
       description: "Memes are not assets or investments and do not have intrinsic value. Their prices may decrease at any time.",
       buttonText: "Enable notifications",
-      buttonAction: "enableNotifications",  // 👈 Function name stored separately
+      buttonAction: "enableNotifications", 
       image: require("../images/notifcationicon.png"),
       footerText: "",
     },
@@ -12,7 +12,7 @@ export default {
       title: "Invite your friends",
       description: "Make money when your friends sign up and trade with your link.",
       buttonText: "Invite a friend",
-      buttonAction: "inviteFriend",  // 👈 Function name stored separately
+      buttonAction: "inviteFriend", 
       image: require("../images/inviteicon.png"),
       footerText: "Skip",
     },
@@ -20,14 +20,14 @@ export default {
       title: "Stay in control",
       description: "Your memes are held in a private wallet. We can't access or freeze your holdings, ever.",
       buttonText: "Register or Sign in",
-      buttonAction: "navigateToSignIn",  // 👈 Function name stored separately
+      buttonAction: "navigateToSignIn", 
       image: require("../images/lockicon.png"),
       footerText: 'Click "Allow paste" to link your referral code.',
     },
   ],
   
   signIn: {
-    title: "What’s your email address?", // Using `’` instead of `'`
+    title: "What’s your email address?",
     description:
       "We only need your email to sign you in. We keep your email private and won’t send spam.",
     placeholder: "Enter your email address",
@@ -74,7 +74,7 @@ export default {
       percent: "-13.01%",
       type: "sell",
       status: "Live",
-      image: require("../images/t1.png"), // Replace with actual image
+      image: require("../images/t1.png"),
     },
     {
       name: "OFFICIAL TRUMP",
@@ -82,7 +82,7 @@ export default {
       percent: "-13.01%",
       type: "sell",
       status: "Live",
-      image: require("../images/t1.png"), // Replace with actual image
+      image: require("../images/t1.png"),
     },
   ],  
    watchlistData : [

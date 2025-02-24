@@ -35,15 +35,12 @@ const BalanceSelectionSheet = ({ visible, onClose, selectedBalance, setSelectedB
           </TouchableOpacity>
         </View>
 
-        {/* Balance Options */}
         {balances.map((balance, index) => (
           <TouchableOpacity
             key={index}
             style={styles.balanceItem}
             onPress={() => {
               setSelectedBalance(balance.name);
-              
-              // ✅ Correctly update the balance icon
               setBalanceIcon(balance.icon);
               onClose();
             }}

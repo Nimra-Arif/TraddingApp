@@ -15,17 +15,35 @@ import ExportKeysScreen from "../screens/settings/ExportKeysScreen"
 import LegalScreen from "../screens/settings/LegalScreen"
 import ActivityScreen from "../screens/ActivityScreen"
 import ExploreDetailsScreen from "../screens/ExploreDetailsScreen"
+import * as Font from "expo-font";
 const Stack = createStackNavigator();
 
 export default function MainNavigator() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
+  useEffect(() => {
+    async function loadFonts() {
+      try {
+        await Font.loadAsync({
+          "Antebas-Regular": require("../../assets/fonts/Fontspring-DEMO-antebas-regular.otf"),
+          "Antebas-Bold": require("../../assets/fonts/Fontspring-DEMO-antebas-bold.otf"),
+          "Antebas-Light": require("../../assets/fonts/Fontspring-DEMO-antebas-light.otf"),
+        });
+        setFontsLoaded(true);
+      } catch (error) {
+        console.error("Error loading fonts:", error);
+      }
+    }
+
+    loadFonts();
+  }, []);
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="Onboarding" component={OnboardingPage1} /> */}
-      {/* <Stack.Screen name="SignInScreen" component={SignInScreen}/> */}
-      {/* <Stack.Screen name="VerifyEmailScreen" component={VerifyEmailScreen}/> */}
+      <Stack.Screen name="Onboarding" component={OnboardingPage1} />
+      <Stack.Screen name="SignInScreen" component={SignInScreen}/>
+      <Stack.Screen name="VerifyEmailScreen" component={VerifyEmailScreen}/>
       <Stack.Screen name="Tabs" component={TabNavigator} />
       <Stack.Screen name="StocksScreen" component={StocksScreen}/>
       <Stack.Screen name="DepositScreen" component={DepositScreen} />

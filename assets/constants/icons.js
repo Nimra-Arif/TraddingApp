@@ -15,10 +15,6 @@ export default {
     spotlight_megaphone:require("../../assets/images/spotlight_megaphone.png"),
     top_gainers:require("../../assets/images/top_gainers.png"),
     watchlist:require("../../assets/images/watchlist.png"),
-    // Created_leaf:require("../../assets/images/Created_leaf.png"),
-    // Created_leaf:require("../../assets/images/Created_leaf.png"),
-    // Created_leaf:require("../../assets/images/Created_leaf.png"),
-    // Created_leaf:require("../../assets/images/Created_leaf.png"),
 
   };
   

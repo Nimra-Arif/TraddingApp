@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
-import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MainNavigator from "./src/navigation/MainNavigator";
 
 export default function App() {
@@ -9,16 +9,32 @@ export default function App() {
 
   useEffect(() => {
     async function loadFonts() {
-      await Font.loadAsync({
-        "Antebas-Regular": require("./assets/fonts/Fontspring-DEMO-antebas-regular.otf"),
-        "Antebas-Bold": require("./assets/fonts/Fontspring-DEMO-antebas-bold.otf"),
-        "Antebas-Light": require("./assets/fonts/Fontspring-DEMO-antebas-light.otf"),
-      });
-      setFontsLoaded(true);
+      try {
+        await Font.loadAsync({
+          "Antebas-Regular": require("./assets/fonts/Fontspring-DEMO-antebas-regular.otf"),
+          "Antebas-Bold": require("./assets/fonts/Fontspring-DEMO-antebas-bold.otf"),
+          "Antebas-Light": require("./assets/fonts/Fontspring-DEMO-antebas-light.otf"),
+        });
+        setFontsLoaded(true);
+      } catch (error) {
+        console.error("Error loading fonts:", error);
+      }
     }
+
     loadFonts();
   }, []);
 
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#ff758f" />
+      </View>
+    );
+  }
 
-  return <MainNavigator />;
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <MainNavigator />
+    </GestureHandlerRootView>
+  );
 }

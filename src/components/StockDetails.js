@@ -1,220 +1,256 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { LineChart } from 'react-native-gifted-charts';
-import { AntDesign } from '@expo/vector-icons';
-import colors from '../../assets/constants/colors';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { LineGraph } from "react-native-graph";
+import { AntDesign } from "@expo/vector-icons";
+import colors from "../../assets/constants/colors";
+import GainsModal from "./GainsModal";
 
 const { width } = Dimensions.get("window");
 
-const StockDetails = ({ priceColor }) => {
-  const timeframes = {
-    LIVE: Array.from({ length: 50 }, (_, i) => ({
-      value: parseFloat((Math.sin(i / 4) * 2 + 16 + Math.random() * 1.5).toFixed(2)),
-      date: `${10 + Math.floor(i / 6)}:${(i % 6) * 10} AM`
-    })),
-    "4H": Array.from({ length: 60 }, (_, i) => ({
-      value: parseFloat((Math.sin(i / 5) * 3 + 16.5 + Math.random() * 2).toFixed(2)),
-      date: `${Math.floor(i / 4)}:${(i % 4) * 15} AM`
-    })),
-    "1D": Array.from({ length: 100 }, (_, i) => ({
-      value: parseFloat((Math.sin(i / 10) * 4 + 17 + Math.random() * 3).toFixed(2)),
-      date: `${Math.floor(i / 4)} AM`
-    })),
-    MAX: Array.from({ length: 80 }, (_, i) => ({
-      value: parseFloat((Math.exp(i / 30) * 3 + 5 + Math.random() * 2).toFixed(2)),
-      date: `${1970 + i}`
-    }))
-  };
+const StockDetails2 = ({ priceColor }) => {
+  const hideTimeoutRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+  const generateTimestampData = useCallback((length, interval) => {
+    // Use a fixed seed for consistent random numbers
+    const now = Date.now();
+    const seed = 42; // Fixed seed for consistent randomness
+    
+    // Create a simple pseudo-random function with seed
+    const seededRandom = (index) => {
+      const x = Math.sin(seed + index) * 10000;
+      return x - Math.floor(x);
+    };
+    useEffect(() => {
+      if (pointerValue && pointerValue.value !== undefined && (percentageChange > 19 || pointerValue.value > 19)) {
+        setShowModal(true);
+      }
+    }, [pointerValue, percentageChange]);
+    
+    
+    
+    return Array.from({ length }, (_, i) => ({
+      value: parseFloat((Math.sin(i / 5) * 3 + 16 + seededRandom(i) * 2).toFixed(2)),
+      date: now - i * interval, // Generates timestamps in milliseconds
+    }));
+  }, []);
+
+  // Create timeframes data only once
+  const timeframesRef = useRef({
+    LIVE: generateTimestampData(50, 60 * 1000), // 1-minute intervals
+    "4H": generateTimestampData(60, 4 * 60 * 1000), // 4-minute intervals
+    "1D": generateTimestampData(100, 60 * 60 * 1000), // 1-hour intervals
+    "1W": generateTimestampData(70, 7 * 24 * 60 * 60 * 1000), // 1-week intervals
+    MAX: generateTimestampData(80, 365 * 24 * 60 * 60 * 1000), // 1-year intervals
+  });
 
   const [selectedTimeframe, setSelectedTimeframe] = useState("1D");
-  const stockPrices = timeframes[selectedTimeframe] || [];
-  const [pointerValue, setPointerValue] = useState(
-    stockPrices.length > 0 ? stockPrices[stockPrices.length - 1] : { value: 0, date: '' }
+  const stockPrices = timeframesRef.current[selectedTimeframe] || [];
+  
+  // Ensure valid stock prices
+  const validStockPrices = stockPrices.filter(
+    (item) => item && typeof item.value === "number" && typeof item.date === "number"
   );
 
+  // Track the selected price based on user interaction
+  const [pointerValue, setPointerValue] = useState(
+    validStockPrices.length > 0 ? validStockPrices[validStockPrices.length - 1] : { value: 0, date: Date.now() }
+  );
+
+  // State to track if the indicator line should be visible
+  const [isIndicatorVisible, setIsIndicatorVisible] = useState(false);
+  const [selectedPointX, setSelectedPointX] = useState(0);
+
+  const handlePointSelected = useCallback((index) => {
+    if (validStockPrices[index]) {
+      setPointerValue(validStockPrices[index]);
+    }
+  }, [validStockPrices]);
+
+  // Memoize touch event handlers to prevent recreation on every render
+  const handleTouchStart = useCallback(() => {
+    setIsIndicatorVisible(true);
+  }, []);
+
+  const handleTouchMove = useCallback(
+    (event) => {
+      const touchX = event.nativeEvent.locationX;
+      setSelectedPointX(touchX);
+  
+      // Find the closest data point
+      const closestIndex = Math.min(
+        Math.max(0, Math.round((touchX / width) * (validStockPrices.length - 1))),
+        validStockPrices.length - 1
+      );
+  
+      if (validStockPrices[closestIndex]) {
+        setPointerValue(validStockPrices[closestIndex]);
+        setIsIndicatorVisible(true);
+  
+        // Reset the timeout for auto-hiding
+        if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+        hideTimeoutRef.current = setTimeout(() => {
+          setIsIndicatorVisible(false);
+          setPointerValue(validStockPrices[validStockPrices.length - 1]); // Set to last value
+        }, 1000); // Hide after 1 second of inactivity
+      }
+    },
+    [validStockPrices]
+  );
+  
+  const handleTouchEnd = useCallback(() => {
+    setIsIndicatorVisible(false);
+    setPointerValue(validStockPrices[validStockPrices.length - 1]); // Reset to last point
+  }, [validStockPrices]);
+  
+
+  // Get the last value for comparison
+  const lastValue = validStockPrices.length > 0 ? validStockPrices[validStockPrices.length - 1].value : 0;
+
+  // Determine if the selected value is increasing or decreasing
+  const isIncreasing = pointerValue.value >= lastValue;
+
+  // Calculate price difference and percentage change
+  const priceDifference = validStockPrices.length > 0 ? Math.abs(pointerValue.value - lastValue).toFixed(3) : "N/A";
+
+  const percentageChange =
+    validStockPrices.length > 0 && lastValue !== 0 ? ((pointerValue.value / lastValue - 1) * 100).toFixed(2) : "N/A";
+
   return (
-    <View>
+    <View style={styles.container}>
+      {/* Price Information */}
       <View style={styles.priceContainer}>
         <Text style={styles.price}>${pointerValue?.value?.toFixed(2) || "N/A"}</Text>
-        <View
-          style={{
-            display:"flex",
-            flexDirection:"row",
-            alignItems:"center",
-          }}
-          >
-        <AntDesign
-            name={pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? "caretup" : "caretdown"}
-            size={16}
-            color={pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? colors.buy : colors.sell}
-          />
-         <Text style={[
-          styles.priceChange,
-          { color: pointerValue.value >= (stockPrices[stockPrices.length - 1]?.value || 0) ? colors.buy : colors.sell }
-        ]}>
-          
-          ${stockPrices.length > 0
-            ? Math.abs(pointerValue.value - stockPrices[stockPrices.length - 1]?.value).toFixed(5)
-            : "N/A"}
-          ({stockPrices.length > 0
-            ? ((pointerValue.value / stockPrices[stockPrices.length - 1]?.value - 1) * 100).toFixed(2)
-            : "N/A"}%)
-          <Text style={styles.priceSubText}>
-            {selectedTimeframe === "MAX" ? " All time" : 
-             selectedTimeframe === "LIVE" ? " Past hour" :
-             selectedTimeframe === "4H" ? " Past 4 hours" :
-             selectedTimeframe === "1D" ? " Past day" :
-             ` Past ${selectedTimeframe}`}
+        <View style={styles.priceChangeContainer}>
+          <AntDesign name={isIncreasing ? "caretup" : "caretdown"} size={16} color={isIncreasing ? "#4ADE80" : "#FF4D4F"} />
+          <Text style={[styles.priceChange, { color: isIncreasing ? "#4ADE80" : "#FF4D4F" }]}>
+            ${priceDifference} ({percentageChange}%)
           </Text>
-          
-        </Text>
         </View>
       </View>
 
-      <View style={styles.chartContainer}>
-        <LineChart
-          curved
-          areaChart
-          data={stockPrices}
-          rotateLabel
-          labelsExtraHeight={20}
-          hideDataPoints
-          spacing={width / stockPrices.length}
-          adjustToWidth
-          color={priceColor}
-          height={300}
-          thickness={1.5}
-          startFillColor={priceColor}
-          endFillColor="transparent"
-          startOpacity={0.3}
-          endOpacity={0}
-          initialSpacing={0}
-          hideYAxisText
-          rulesType="dotted"
-          rulesColor="transparent"
-          xAxisColor="transparent"
-          width={width}
-          pointerConfig={{
-            showPointerStrip: true,
-            pointerStripWidth: 1,
-            pointerStripColor: colors.accents,
-            pointerStripDashedArray: [3, 3],
-            pointerColor: "transparent",
-            pointerRadius: 0,
-            pointerLabelWidth: 100,
-            pointerLabelHeight: 30,
-            activatePointersOnLongPress: false,
-            autoAdjustPointerLabelPosition: true,
-            stripOverPointer: true,
-            stripHeight: 320,
-            pointerVanishDelay: 0,
-            onPointSelected: (items) => {
-              if (items.length > 0 && items[0]?.value !== undefined) {
-                setPointerValue(items[0]);
-              }
-            },
-            pointerLabelComponent: (items) => (
-              <View style={styles.pointerLabel}>
-                <Text style={styles.pointerLabelText}>
-                  {items[0]?.date || "N/A"}
-                </Text>
-              </View>
-            ),
-          }}
-        />
+      {/* Graph Section */}
+      <View 
+        style={styles.chartContainer} 
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {validStockPrices.length > 0 ? (
+          <>
+            <LineGraph
+              points={validStockPrices.map((item) => ({
+                value: item.value,
+                date: new Date(item.date),
+              }))}
+              animated={true}
+              color={priceColor}
+              enablePanGesture={false}
+              // enablePanGesture={true}
+              onPointSelected={handlePointSelected}
+              enableFadeIn={true}
+              gradientFillColors={[priceColor, "transparent", "transparent"]}
+              lineThickness={1}
+              height={250}
+              width={width - 20}
+              panGestureDelay={0}
+              verticalPadding={20}
+            />
+            {/* Vertical Indicator Line - only visible when touching */}
+            {isIndicatorVisible && (
+              <View style={[styles.verticalLine, { left: selectedPointX, borderColor: "#888888" }]} />
+            )}
+          </>
+        ) : (
+          <Text style={{ textAlign: "center", color: colors.subText }}>No data available</Text>
+        )}
       </View>
 
+      {/* Timeframe Selection Buttons */}
       <View style={styles.timeframeContainer}>
-        {Object.keys(timeframes).map((timeframe) => (
+        {Object.keys(timeframesRef.current).map((timeframe) => (
           <TouchableOpacity
             key={timeframe}
             onPress={() => {
-              if (timeframes[timeframe]) {
-                setSelectedTimeframe(timeframe);
-                const newStockPrices = timeframes[timeframe] || [];
-                setPointerValue(newStockPrices.length > 0 ? newStockPrices[newStockPrices.length - 1] : { value: 0, date: '' });
-              }
+              setSelectedTimeframe(timeframe);
+              const newStockPrices = timeframesRef.current[timeframe] || [];
+              const validNewPrices = newStockPrices.filter((item) => item && typeof item.value === "number");
+              setPointerValue(validNewPrices.length > 0 ? validNewPrices[validNewPrices.length - 1] : { value: 0, date: Date.now() });
             }}
             style={[
               styles.timeframeButton,
-              { borderColor: priceColor },
-              selectedTimeframe === timeframe && { backgroundColor: priceColor }
+              selectedTimeframe === timeframe
+                ? { backgroundColor: priceColor, borderColor: priceColor }
+                : { borderColor: priceColor, backgroundColor: "transparent" },
             ]}
           >
-            <Text style={[
-              styles.timeframeText,
-              { color: priceColor },
-              selectedTimeframe === timeframe && { color: colors.background }
-            ]}>
+            <Text style={[styles.timeframeText, { color: selectedTimeframe === timeframe ? colors.background : priceColor }]}>
               {timeframe}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
+      <GainsModal 
+      visible={showModal} 
+      onClose={() => setShowModal(false)} 
+      percentageGain={percentageChange} 
+      price={pointerValue.value} 
+    />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 15,
+  },
   priceContainer: {
     marginTop: 10,
-    paddingHorizontal: 10
+    paddingHorizontal: 16,
   },
   price: {
     fontSize: 36,
-    color: colors.text,
-    fontWeight: "bold"
+    color: "#FFFFFF",
+    fontWeight: "bold",
+  },
+  priceChangeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   priceChange: {
-    fontSize: 13,
-    marginBottom: 5,
-    marginLeft:2,
-  },
-  priceSubText: {
-    color: colors.subText,
-    fontSize: 13
+    fontSize: 16,
+    marginLeft: 4,
   },
   chartContainer: {
     width: width,
-    height: 320,
+    height: 300,
     justifyContent: "center",
     alignItems: "center",
-    paddingLeft: 0,
-    marginLeft: -10,
-    marginRight: 0,
-    marginTop: 10,
-  },
-  pointerLabel: {
-    position: 'absolute',
-    top: -15,
-    backgroundColor: 'transparent',
-    padding: 4,
-    borderRadius: 4,
-    alignItems: 'center',
-  },
-  pointerLabelText: {
-    color: colors.text,
-    fontSize: 12,
-    fontWeight: "500"
   },
   timeframeContainer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 10,
-    marginBottom: 40
+    marginBottom: 20,
   },
   timeframeButton: {
     marginHorizontal: 5,
     paddingVertical: 8,
     paddingHorizontal: 15,
-    borderRadius: 12,
-    backgroundColor: colors.background
+    borderRadius: 20,
+    borderWidth: 0,
   },
   timeframeText: {
-    // fontWeight: "bold",
     fontSize: 14,
+    fontWeight: "bold",
+  },
+  verticalLine: {
+    position: "absolute",
+    top: 20,
+    bottom: 20,
+    width: 1,
+    borderWidth: 0.75,
+    borderStyle: "dashed",
   },
 });
 
-export default StockDetails;
-
+export default StockDetails2;
