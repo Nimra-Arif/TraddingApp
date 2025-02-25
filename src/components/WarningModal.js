@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   warningTitle: {
     fontSize: 22,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.sellButton, // Matching warning color
     marginTop: 10,
   },
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     // fontFamily: "Antebas-Bold",
     color: colors.text,
-    fontWeight:"bold",
+    fontFamily: "Inter-Bold",
     marginTop: 40,
   },
   warningText: {
     fontSize: 15,
-    // fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.text,
     textAlign: "center",
     fontWeight:"500",
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   dyorText: {
     fontSize: 13,
-    // fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     fontWeight:"500",
     color: colors.subText,
     marginVertical: 80,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.text,
     fontSize: 15,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
 });
 

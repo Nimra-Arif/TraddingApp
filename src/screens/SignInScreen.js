@@ -73,14 +73,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     textAlign: "center",
     marginBottom: 20,
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.subText,
     fontSize: 16,
+    fontFamily: "Inter-Regular",
     color: colors.text,
     backgroundColor: colors.accents,
     paddingRight: 40, 
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   checkboxText: {
     color: colors.subText,
     fontSize: 14,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     flexShrink: 1,
   },
   link: {

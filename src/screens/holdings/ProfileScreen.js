@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.subText,
   },
   input: {
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     color: colors.text,
+    fontFamily: "Inter-Regular",
     fontSize: 15,
     marginTop: 5,
     borderColor: colors.accents,
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
   },
   memberText: {
     fontSize: 12,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     textAlign: "center",
     marginTop: 20,

@@ -209,8 +209,8 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 36,
-    color: "#FFFFFF",
-    fontWeight: "bold",
+    color: colors.text,
+    fontFamily: "Inter-Bold",
   },
   priceChangeContainer: {
     flexDirection: "row",
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
   },
   priceChange: {
     fontSize: 16,
+    fontFamily: "Inter-Regular",
     marginLeft: 4,
   },
   chartContainer: {
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
   },
   timeframeText: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
   },
   verticalLine: {
     position: "absolute",

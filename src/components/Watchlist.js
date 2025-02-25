@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginLeft: 10,
     marginVertical: 20,
@@ -224,12 +224,13 @@ const styles = StyleSheet.create({
   },
   watchlistName: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginBottom: 5,
   },
   watchlistCap: {
     fontSize: 13,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
   },
   watchlistPriceContainer: {
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
   },
   watchlistChange: {
     fontSize: 13,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     marginLeft: 5,
     textAlignVertical:"bottom"
   },

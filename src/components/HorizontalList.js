@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
   clearText: {
     color: colors.mainColor,
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   sectionTitle: {
     fontSize: 20,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginLeft: 10,
     marginVertical: 10,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 15,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
 });

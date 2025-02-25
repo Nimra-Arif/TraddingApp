@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     // fontFamily: "Antebas-Bold",
-    fontWeight:"bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     flex: 1,
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     marginLeft: 10,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
   },
   deleteText: {
     flex: 1,
     fontSize: 16,
     color: colors.sell,
     marginLeft: 10,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
   },
 });
 

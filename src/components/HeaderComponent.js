@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
   searchInput: {
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     flex: 1,
     fontSize: 14,
     color: colors.text,

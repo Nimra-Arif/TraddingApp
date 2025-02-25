@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     marginBottom: 20,
   },
   description: {
     fontSize: 16,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     textAlign: "center",
     marginBottom: 30,
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.subText,
     fontSize: 16,
+    fontFamily: "Inter-Regular",
     color: colors.text,
     backgroundColor: colors.background,
     paddingRight: 40, // Space for loader

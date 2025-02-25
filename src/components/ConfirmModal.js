@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginBottom: 20,
   },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   cancelText: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.subText,
   },
   removeButton: {
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   },
   removeText: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
-    color: "#fff",
+    fontFamily: "Inter-Bold",
+    color: colors.text,
   },
 });
 

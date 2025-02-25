@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 20,
-        fontFamily: "Antebas-Bold",
+        fontFamily: "Inter-Bold",
         color: colors.text,
         marginLeft: 10,
         marginVertical: 20,
@@ -101,17 +101,17 @@ const styles = StyleSheet.create({
     spotlightShortName: {
         fontSize: 12,
         color: colors.subText,
-        fontFamily: "Antebas-Bold",
+        fontFamily: "Inter-Bold",
     },
     spotlightName: {
         fontSize: 18,
         color: colors.text,
-        fontFamily: "Antebas-Bold",
+        fontFamily: "Inter-Bold",
     },
     liveText: {
         fontSize: 14,
         color: colors.mainColor,
-        fontWeight: "bold",
+        fontFamily: "Inter-Bold",
     },
     changeRow: {
         flexDirection: "row",
@@ -121,11 +121,12 @@ const styles = StyleSheet.create({
     },
     spotlightChange: {
         fontSize: 14,
-        fontWeight: "bold",
+        fontFamily: "Inter-Bold",
         marginLeft: 5,
     },
     spotlightSubText: {
         fontSize: 12,
+        fontFamily: "Inter-Regular",
         color: colors.subText,
         marginLeft: 8,
     },

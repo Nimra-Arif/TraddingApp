@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     flex: 1,
@@ -78,14 +78,14 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 20,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginTop: 10,
   },
   emptySubtitle: {
     fontSize: 14,
     color: colors.subText,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     marginTop: 5,
     textAlign: "center",
     paddingHorizontal: 30,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   exploreButtonText: {
     fontSize: 13,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.text,
     marginLeft: 10,
   },

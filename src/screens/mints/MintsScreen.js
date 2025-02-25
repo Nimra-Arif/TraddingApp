@@ -117,7 +117,7 @@ const styles = {
   balanceTitle: {
     fontSize: 16,
     color: colors.subText,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   balanceRow: {
     flexDirection: "row",
@@ -128,7 +128,7 @@ const styles = {
   balanceAmount: {
     fontSize: 32,
     color: colors.text,
-    fontFamily: "Inter-Bold", // UPDATED FONT FAMILY
+    fontFamily: "Inter-Bold",
   },
   addCoinButton: {
     backgroundColor: colors.mainColor,
@@ -138,7 +138,7 @@ const styles = {
   },
   addCoinText: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
   

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     flex: 1, // Ensures the title is centered properly

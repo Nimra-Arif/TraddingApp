@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     flex: 1,
@@ -87,11 +87,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
   sectionSubtitle: {
     fontSize: 14,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     marginTop: 5,
   },
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     color: colors.text,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
 });
 

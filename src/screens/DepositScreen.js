@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     title: {
         color: colors.text,
         fontSize: 18,
-        fontFamily: "Antebas-Bold",
+        fontFamily: "Inter-Bold",
         marginTop: 10,
     },
     closeButton: {
@@ -252,13 +252,14 @@ const styles = StyleSheet.create({
     balanceText: {
         color: colors.text,
         fontSize: 14,
+        fontFamily: "Inter-Regular",
         marginLeft: 10,
         flex: 1,
     },
     amount: {
         color: colors.text,
         fontSize: 60,
-        fontWeight: "bold",
+        fontFamily: "Inter-Bold",
         textAlign: "center",
         marginVertical: 20,
     },
@@ -275,6 +276,7 @@ const styles = StyleSheet.create({
     paymentText: {
         color: colors.text,
         fontSize: 14,
+        fontFamily: "Inter-Regular",
         marginLeft: 10,
         flex: 1,
     },
@@ -292,6 +294,7 @@ const styles = StyleSheet.create({
     quickAmountText: {
         color: colors.text,
         fontSize: 16,
+        fontFamily: "Inter-Regular",
     },
     keypad: {
         marginTop: 10
@@ -310,7 +313,7 @@ const styles = StyleSheet.create({
     keypadText: {
         color: "white",
         fontSize: 38,
-        fontWeight: "bold"
+        fontFamily: "Inter-Bold",
     },
     swipeWrapper: {
         width: "100%",
@@ -340,7 +343,7 @@ const styles = StyleSheet.create({
         width: "100%",
         textAlign: "center",
         zIndex: 0,
-        fontFamily: "Antebas-Regular",
+        fontFamily: "Inter-Regular",
     },
     swipeBackground: {
         position: "absolute",

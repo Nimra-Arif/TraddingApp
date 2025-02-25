@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 14,
     color: colors.text,
+    fontFamily: "Inter-Regular",
     marginTop: 8,
   },
   balanceContainer: {
@@ -173,19 +174,19 @@ const styles = StyleSheet.create({
   },
   balanceLabel: {
     fontSize: 14,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.subText,
   },
   balanceAmount: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginVertical: 5,
   },
   balanceChange: {
     fontSize: 14,
     color: colors.subText,
-    // fontWeight: "bold",
+    fontFamily: "Inter-Regular",
     textAlignVertical:"bottom"
   },
   actionsContainer: {
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.text,
     marginTop: 5,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   image: {
     width: 38,

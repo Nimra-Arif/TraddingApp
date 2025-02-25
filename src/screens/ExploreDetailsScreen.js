@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.text,
     textAlign: "center",
   },

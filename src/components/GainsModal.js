@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 26, // Increased font size
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
   sinceText: {
     fontSize: 17,
     color: colors.text,
     marginVertical: 5,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   dateText: {
     fontSize: 17,
@@ -138,13 +138,13 @@ const styles = StyleSheet.create({
   },
   withText: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color:colors.subText,
     marginTop: 15,
   },
   platformText: {
     fontSize: 21,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color:colors.text,
     marginTop: 5,
   },
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         left: 30,
   },
   shareText: {
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color:colors.text,
     fontSize: 18,
   },

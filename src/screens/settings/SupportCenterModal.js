@@ -92,24 +92,25 @@ const styles = StyleSheet.create({
   },
   greetingText: {
     fontSize: 28,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.subText,
     textAlign: "center",
   },
   username: {
     fontSize: 26,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     color: colors.subText,
     textAlign: "center",
   },
   wave: {
     fontSize: 28,
+    fontFamily: "Inter-Regular",
     textAlign: "center",
     marginTop: 5,
   },
   helpText: {
     fontSize: 22,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     textAlign: "center",
     marginTop: 10,
     color: colors.accents,
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.accents,
   },
   footerContainer: {
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.subText,
     textAlign: "center",
+    fontFamily: "Inter-Regular",
   },
 });
 

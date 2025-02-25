@@ -118,17 +118,19 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: colors.text,
     fontSize: 24,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     marginLeft: 5,
     // marginBottom:10,
   },
   subText: {
     color: colors.subText,
     fontSize: 16,
+    fontFamily: "Inter-Regular",
   },
   subText2: {
     color: colors.subText,
     fontSize: 14,
+    fontFamily: "Inter-Regular",
     marginLeft: 10,
     marginTop:5,
     // fontFamily: "Antebas-Regular",
@@ -136,6 +138,7 @@ const styles = StyleSheet.create({
   balanceValue: {
     color: colors.text,
     fontSize: 22,
+    fontFamily: "Inter-Regular",
   },
   aboutContainer: {
     paddingVertical: 40,
@@ -156,6 +159,7 @@ const styles = StyleSheet.create({
   infoText: {
     color: colors.text,
     fontSize: 17,
+    fontFamily: "Inter-Bold",
     marginLeft: 10,
     fontWeight: '600',
   },
@@ -163,10 +167,12 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 17,
     fontWeight: '600',
+    fontFamily: "Inter-Bold",
   },
   disclaimerText: {
     color: colors.subText,
     fontSize: 12,
+    fontFamily: "Inter-Regular",
     marginTop: 20,
     lineHeight: 22,
   },

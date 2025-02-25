@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   methodInfo: { flexDirection: "row", alignItems: "center" },
-  methodText: { color: colors.text, fontSize: 16, marginLeft: 10 },
-  comingSoonText: { fontSize: 12, color: colors.subText, backgroundColor:colors.accents, padding: 5, borderRadius: 6 },
+  methodText: { color: colors.text, fontSize: 16, marginLeft: 10,fontFamily: "Inter-Regular", },
+  comingSoonText: { fontSize: 12,fontFamily: "Inter-Regular", color: colors.subText, backgroundColor:colors.accents, padding: 5, borderRadius: 6 },
 });
 
 export default PaymentMethodsSheet;

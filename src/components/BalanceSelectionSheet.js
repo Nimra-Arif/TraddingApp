@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   title: { 
     color: "white", 
     fontSize: 20, 
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   closeButton: {
     position: "absolute",
@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   balanceInfo: { flexDirection: "row", alignItems: "center" },
-  balanceText: { color: "white", fontSize: 20, fontFamily: "Antebas-Bold" },
-  subText: { color: colors.subText, fontSize: 16 },
-  balanceAmount: { color: "white", fontSize: 20, fontWeight: "bold" },
+  balanceText: { color: "white", fontSize: 20, fontFamily: "Inter-Bold", },
+  subText: { color: colors.subText, fontSize: 16,fontFamily: "Inter-Regular", },
+  balanceAmount: { color: "white", fontSize: 20, fontFamily: "Inter-Bold", },
 });
 
 export default BalanceSelectionSheet;

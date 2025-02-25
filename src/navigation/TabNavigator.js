@@ -50,7 +50,7 @@ export default function TabNavigator() {
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          fontFamily: "Antebas-Bold",
+          fontFamily: "Inter-Bold",
           marginBottom: 5,
         },
         tabBarBackground: () => (

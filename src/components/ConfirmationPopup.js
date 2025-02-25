@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 15,
     color: colors.text,
+    fontFamily: "Inter-Regular",
     textAlign: "center",
     marginBottom: 20,
   },
@@ -63,16 +64,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.subText,
   },
   confirmButton: {
-    backgroundColor: colors.sellButton, // Change to a red color for sign-out
+    backgroundColor: colors.sellButton, 
   },
   cancelText: {
     color: colors.text,
     fontSize: 15,
+    fontFamily: "Inter-Regular",
   },
   confirmText: {
     color: "white",
     fontSize: 15,
-    // fontWeight: "bold",
+    fontFamily: "Inter-Regular",
   },
 });
 

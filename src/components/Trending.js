@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginLeft: 10,
     marginVertical: 20,
@@ -90,12 +90,13 @@ const styles = StyleSheet.create({
   },
   trendingName: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginBottom: 5,
   },
   trendingCap: {
     fontSize: 13,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
   },
   trendingPriceContainer: {
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
   trendingChange: {
     fontSize: 13,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     marginLeft: 5,
     textAlignVertical:"bottom"
   },

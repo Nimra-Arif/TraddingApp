@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     marginBottom: 20,
@@ -113,11 +113,11 @@ const styles = StyleSheet.create({
   rewardLabel: {
     fontSize: 17,
     color: colors.subText,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
   },
   rewardValue: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
   divider: {
@@ -143,12 +143,13 @@ const styles = StyleSheet.create({
   },
   inviteText: {
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
   },
   footerText: {
     fontSize: 12,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     textAlign: "center",
     marginTop: 15,

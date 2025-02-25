@@ -159,11 +159,12 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 17,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
   email: {
     fontSize: 13,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
   },
   settingItem: {
@@ -177,6 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
+    fontFamily: "Inter-Regular",
     color: colors.text,
   },
   socialContainer: {
@@ -196,6 +198,7 @@ const styles = StyleSheet.create({
   },
   versionText: {
     fontSize: 13,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     textAlign: "center",
     marginTop: 10,

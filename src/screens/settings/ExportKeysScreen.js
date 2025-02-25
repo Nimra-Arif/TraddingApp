@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
     flex: 1,
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 22,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
   },
   sectionSubtitle: {
     fontSize: 14,
     color: colors.subText,
     marginTop: 5,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
   },
   walletContainer: {
     backgroundColor: colors.card,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.text,
     marginLeft: 10,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
   },
   copyContainer: {
     flexDirection: "row",
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   },
   walletAddress: {
     fontSize: 16,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     marginRight: 8,
   },
@@ -142,12 +143,13 @@ const styles = StyleSheet.create({
   secretText: {
     flex: 1,
     fontSize: 18,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.text,
     marginLeft: 10,
   },
   exportText: {
     fontSize: 15,
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     marginRight: 10,
   },

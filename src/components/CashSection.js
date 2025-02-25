@@ -83,11 +83,11 @@ const styles = StyleSheet.create({
   cashLabel: {
     fontSize: 22,
     color: colors.text,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
   },
   cashAmount: {
     fontSize: 17,
-    fontWeight: "400",
+    fontFamily: "Inter-Bold",
     color: colors.subText,
   },
   addButton: {
@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
   },
   depositTitle: {
     fontSize: 18,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginVertical: 10,
   },
   depositDescription: {
     fontSize: 14,
     color: colors.subText,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     textAlign: "center",
   },
   depositButton: {
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   depositButtonText: {
     color: colors.text,
     fontSize: 14,
+    fontFamily: "Inter-Regular",
   },
   image:{
     height:18,

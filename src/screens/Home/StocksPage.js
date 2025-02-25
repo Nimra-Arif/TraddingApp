@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   headerIcons: { flexDirection: "row" },
   coinInfo: { flexDirection: "row", alignItems: "center", marginTop: 30, paddingHorizontal: 10 },
   coinImage: { width: 50, height: 50, borderRadius: 50, marginRight: 10 },
-  coinTicker: { color: colors.subText, fontSize: 14, fontFamily: "Antebas-Bold" },
-  coinName: { color: colors.text, fontSize: 20, fontWeight: "bold", fontFamily: "Antebas-Bold" },
+  coinTicker: { color: colors.subText, fontSize: 14, fontFamily: "Inter-Bold",},
+  coinName: { color: colors.text, fontSize: 20, fontFamily: "Inter-Bold", },
 
   // Buy Button Wrapper
   buyButtonWrapper: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   actionButtonText: {
     color: colors.text,
     fontSize: 16,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     // fontWeight: 'bold',
     textAlign: "center",
     marginLeft:-30,
@@ -218,8 +218,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -30, // Floating above the button
   },
-  purchaseText: { color: 'white', fontSize: 14, marginLeft: 5, fontWeight: 'bold' },
-  purchaseAmount: { color: colors.buy, fontWeight: 'bold' },
+  purchaseText: { color: 'white', fontSize: 14, marginLeft: 5, fontFamily: "Inter-Bold",},
+  purchaseAmount: { color: colors.buy, fontFamily: "Inter-Bold", },
   headerCoinInfo: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   headerCoinText: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'Antebas-Bold',
+    fontFamily: "Inter-Bold",
   },
   modalBackground: {
     flex: 1,

@@ -97,7 +97,7 @@ const styles = {
   balanceTitle: {
     fontSize: 15,
     color: colors.subText,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   balanceAmount: {
     fontSize: 30,

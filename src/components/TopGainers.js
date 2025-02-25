@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     marginLeft: 10,
     marginVertical: 20,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     marginRight: 15,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
   },
   gainerChangeContainer: {
 
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   gainerChange: {
     fontSize: 13,
-    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
     marginLeft: 5,
     textAlignVertical:"bottom",
   },

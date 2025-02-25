@@ -113,13 +113,13 @@ const styles = {
   },
   title: {
     fontSize: 24,
-    fontFamily: "Antebas-Bold",
+    fontFamily: "Inter-Bold",
     color: colors.text,
     textAlign: "center",
   },
   description: {
     fontSize: 16,
-    fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
     color: colors.subText,
     textAlign: "center",
     marginTop: 10,
@@ -160,12 +160,11 @@ const styles = {
   buttonText: {
     color: colors.text,
     fontSize: 17,
-    fontFamily: "Antebas-Regular",
-    FontWeight:"600",
+    fontFamily: "Inter-Bold",
   },
   footerText: {
     color: colors.subText,
     fontSize: 14,
-    // fontFamily: "Antebas-Regular",
+    fontFamily: "Inter-Regular",
   },
 };
